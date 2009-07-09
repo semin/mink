@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+*~
+*.old
+*.tar.gz
+*.tgz
+index/
+log/*.log
+log/*.pid
+tmp/*
+tmp/*.csv
+tmp/**/*
+db/sphinx
+config/*.sphinx.conf
+config/database.yml
