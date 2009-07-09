@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/auto_migrations"]
+	path = vendor/plugins/auto_migrations
+	url = git://github.com/pjhyett/auto_migrations.git
