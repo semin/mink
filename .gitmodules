@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/auto_migrations"]
 	path = vendor/plugins/auto_migrations
 	url = git://github.com/pjhyett/auto_migrations.git
+[submodule "vendor/plugins/awesome_nested_set"]
+	path = vendor/plugins/awesome_nested_set
+	url = git://github.com/collectiveidea/awesome_nested_set.git
