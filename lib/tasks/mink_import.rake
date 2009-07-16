@@ -75,20 +75,27 @@ namespace :mink do
         columns = line.chomp.split(/\s+/)
 
         if columns.size == 14
-          MinkVector.create!(:sunid    => columns[0],
-                             :area_a   => columns[1],
-                             :r_half_a => columns[2],
-                             :std_a    => columns[3],
-                             :area_p   => columns[4],
-                             :r_half_p => columns[5],
-                             :std_p    => columns[6],
-                             :mean     => columns[7],
-                             :std_mb   => columns[8],
-                             :kurtosis => columns[9],
-                             :skewness => columns[10],
-                             :area_e   => columns[11],
-                             :std_e    => columns[12],
-                             :is       => columns[13])
+          dom = Scop.find_by_sunid(columns[0])
+
+          if dom.nil?
+            puts "!!! Cannot find SCOP domain, #{columns[0]}"
+            next
+          end
+
+          dom.create_mink_vector(:sunid    => columns[0],
+                                 :area_a   => columns[1],
+                                 :r_half_a => columns[2],
+                                 :std_a    => columns[3],
+                                 :area_p   => columns[4],
+                                 :r_half_p => columns[5],
+                                 :std_p    => columns[6],
+                                 :mean     => columns[7],
+                                 :std_mb   => columns[8],
+                                 :kurtosis => columns[9],
+                                 :skewness => columns[10],
+                                 :area_e   => columns[11],
+                                 :std_e    => columns[12],
+                                 :is       => columns[13])
         end
       end
 

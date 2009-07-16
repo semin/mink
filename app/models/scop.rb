@@ -90,6 +90,9 @@ end
 
 class ScopDomain < Scop
 
+  has_one :mink_vector,
+          :foreign_key  => :scop_id
+
   def self.find_all_by_pdb_code(pdb_code)
     find(:all, :conditions => ["sid like ?", "_#{pdb_code.downcase}%"])
   end
