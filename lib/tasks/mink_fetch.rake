@@ -22,7 +22,32 @@ namespace :mink do
         link = "#{stem}_#{version}"
         File.open(tmp_dir.join(link), 'w') do |f|
           f.puts open(scop_uri + "/#{link}").read
-          logger.info ">>> Downloading #{link}: done"
+          $logger.info ">>> Downloading #{link}: done"
+        end
+      end
+    end
+
+
+    desc "Fetch NR95 SCOP PDB-style files from local mirror"
+    task :scop_pdb => [:environment] do
+
+      scop_dir = Pathname.new("/BiO/Store/SCOP")
+      scop_pdb = scop_dir.join("pdbstyle")
+      scop_seq = scop_dir.join("scopseq")
+      astral95 = scop_seq.join("astral-scopdom-seqres-gd-sel-gs-bib-95-1.75.fa")
+      mink_dir = Rails.root.join("minkscop")
+
+      IO.foreach(astral95) do |line|
+        if line =~ %r{^>(\S+)\s+}
+          sid = $1
+          dom_sid = sid.gsub(%r{^g}, 'd')
+          dom_pdb = scop_pdb.join(dom_sid[2..3], "#{dom_sid}.ent")
+
+          if !File.exists? dom_pdb
+            $logger.error "!!! Cannot find #{dom_pdb}"
+            exit 1
+          end
+          cp dom_pdb, mink_dir
         end
       end
     end
