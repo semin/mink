@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 0) do
   # 'mink_vectors' table
   create_table :mink_vectors, :force => true do |t|
     t.belongs_to  :scop
+    t.string      :sid
     t.integer     :sunid
     t.float       :area_a
     t.float       :r_half_a
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :is
   end
 
-  add_index :mink_vectors, :sunid, :unique => true
+  add_index :mink_vectors, :sid,    :unique => true
+  add_index :mink_vectors, :sunid,  :unique => true
 
 end

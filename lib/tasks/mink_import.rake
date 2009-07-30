@@ -57,17 +57,17 @@ namespace :mink do
           current_scop.move_to_child_of(parent_scop)
         end
       end
-      logger.info ">>> Importing SCOP: done"
+      $logger.info ">>> Importing SCOP: done"
     end # task :scop
 
 
     desc "Import Minkowski vectors"
     task :mink_vectors => [:environment] do
 
-      vec_file = Rails.root.join("tmp", "vectors.dat")
+      vec_file = Rails.root.join("minkscop", "results", "vectors.dat")
 
       unless File.exists? vec_file
-        logger.error "!!! #{vec_file} doesn not exist"
+        $logger.error "!!! #{vec_file} doesn not exist"
         exit 1
       end
 
@@ -75,31 +75,34 @@ namespace :mink do
         columns = line.chomp.split(/\s+/)
 
         if columns.size == 14
-          dom = Scop.find_by_sunid(columns[0])
+          dom = Scop.find_by_sid(columns[0])
 
           if dom.nil?
-            puts "!!! Cannot find SCOP domain, #{columns[0]}"
-            next
+            $logger.error "!!! Cannot find SCOP domain, #{columns[0]}"
+            exit 1
           end
 
-          dom.create_mink_vector(:sunid    => columns[0],
-                                 :area_a   => columns[1],
-                                 :r_half_a => columns[2],
-                                 :std_a    => columns[3],
-                                 :area_p   => columns[4],
-                                 :r_half_p => columns[5],
-                                 :std_p    => columns[6],
-                                 :mean     => columns[7],
-                                 :std_mb   => columns[8],
-                                 :kurtosis => columns[9],
-                                 :skewness => columns[10],
-                                 :area_e   => columns[11],
-                                 :std_e    => columns[12],
-                                 :is       => columns[13])
+          dom.create_mink_vector(:sid       => columns[0],
+                                 :sunid     => dom.sunid,
+                                 :area_a    => columns[1],
+                                 :r_half_a  => columns[2],
+                                 :std_a     => columns[3],
+                                 :area_p    => columns[4],
+                                 :r_half_p  => columns[5],
+                                 :std_p     => columns[6],
+                                 :mean      => columns[7],
+                                 :std_mb    => columns[8],
+                                 :kurtosis  => columns[9],
+                                 :skewness  => columns[10],
+                                 :area_e    => columns[11],
+                                 :std_e     => columns[12],
+                                 :is        => columns[13])
+        else
+          $logger.warn "!!! Cannot recognize this line: #{line.chomp}"
+          next
         end
       end
-
-      logger.info ">>> Importing Minkowski vectors: done"
+      $logger.info ">>> Importing Minkowski vectors: done"
     end
 
   end
