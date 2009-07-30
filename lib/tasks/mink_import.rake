@@ -210,6 +210,48 @@ namespace :mink do
           :is             => sub_mink_vector[16] / max_is
         )
       end
+
+      MinkValue.create!(
+        :min_area_a       => min_area_a,
+        :min_r_half_a     => min_r_half_a,
+        :min_std_a        => min_std_a,
+        :min_area_p       => min_area_p,
+        :min_r_half_p     => min_r_half_p,
+        :min_std_p        => min_std_p,
+        :min_mean         => min_mean,
+        :min_std_mb       => min_std_mb,
+        :min_kurtosis     => min_kurtosis,
+        :min_skewness     => min_skewness,
+        :min_area_e       => min_area_e,
+        :min_std_e        => min_std_e,
+        :min_is           => min_is,
+        :max_area_a       => MinkVector.minimum(:area_a),
+        :max_r_half_a     => MinkVector.minimum(:r_half_a),
+        :max_std_a        => MinkVector.minimum(:std_a),
+        :max_area_p       => MinkVector.minimum(:area_p),
+        :max_r_half_p     => MinkVector.minimum(:r_half_p),
+        :max_std_p        => MinkVector.minimum(:std_p),
+        :max_mean         => MinkVector.minimum(:mean),
+        :max_std_mb       => MinkVector.minimum(:std_mb),
+        :max_kurtosis     => MinkVector.minimum(:kurtosis),
+        :max_skewness     => MinkVector.minimum(:skewness),
+        :max_area_e       => MinkVector.minimum(:area_e),
+        :max_std_e        => MinkVector.minimum(:std_e),
+        :max_is           => MinkVector.minimum(:is),
+        :submax_area_a    => max_area_a,
+        :submax_r_half_a  => max_r_half_a,
+        :submax_std_a     => max_std_a,
+        :submax_area_p    => max_area_p,
+        :submax_r_half_p  => max_r_half_p,
+        :submax_std_p     => max_std_p,
+        :submax_mean      => max_mean,
+        :submax_std_mb    => max_std_mb,
+        :submax_kurtosis  => max_kurtosis,
+        :submax_skewness  => max_skewness,
+        :submax_area_e    => max_area_e,
+        :submax_std_e     => max_std_e,
+        :submax_is        => max_is
+      )
     end
 
   end
