@@ -54,4 +54,29 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index :mink_vectors, :sid,    :unique => true
   add_index :mink_vectors, :sunid,  :unique => true
 
+
+  # 'norm_mink_vectors' table
+  create_table :norm_mink_vectors, :force => true do |t|
+    t.belongs_to  :scop
+    t.belongs_to  :mink_vector
+    t.string      :sid
+    t.integer     :sunid
+    t.float       :area_a
+    t.float       :r_half_a
+    t.float       :std_a
+    t.float       :area_p
+    t.float       :r_half_p
+    t.float       :std_p
+    t.float       :mean
+    t.float       :std_mb
+    t.float       :kurtosis
+    t.float       :skewness
+    t.float       :area_e
+    t.float       :std_e
+    t.float       :is
+  end
+
+  add_index :norm_mink_vectors, :sid,    :unique => true
+  add_index :norm_mink_vectors, :sunid,  :unique => true
+
 end

@@ -105,5 +105,112 @@ namespace :mink do
       $logger.info ">>> Importing Minkowski vectors: done"
     end
 
+
+    desc "Import Normalized Minkowski vectors"
+    task :norm_mink_vectors => [:environment] do
+
+      # find minimum values for each column of mink_vectors table
+      min_area_a    = MinkVector.minimum(:area_a)
+      min_r_half_a  = MinkVector.minimum(:r_half_a)
+      min_std_a     = MinkVector.minimum(:std_a)
+      min_area_p    = MinkVector.minimum(:area_p)
+      min_r_half_p  = MinkVector.minimum(:r_half_p)
+      min_std_p     = MinkVector.minimum(:std_p)
+      min_mean      = MinkVector.minimum(:mean)
+      min_std_mb    = MinkVector.minimum(:std_mb)
+      min_kurtosis  = MinkVector.minimum(:kurtosis)
+      min_skewness  = MinkVector.minimum(:skewness)
+      min_area_e    = MinkVector.minimum(:area_e)
+      min_std_e     = MinkVector.minimum(:std_e)
+      min_is        = MinkVector.minimum(:is)
+
+      sub_mink_vectors  = []
+      max_area_a        = 0.0
+      max_r_half_a      = 0.0
+      max_std_a         = 0.0
+      max_area_p        = 0.0
+      max_r_half_p      = 0.0
+      max_std_p         = 0.0
+      max_mean          = 0.0
+      max_std_mb        = 0.0
+      max_kurtosis      = 0.0
+      max_skewness      = 0.0
+      max_area_e        = 0.0
+      max_std_e         = 0.0
+      max_is            = 0.0
+
+      MinkVector.find_each do |mink_vector|
+        sub_area_a   = mink_vector.area_a   - min_area_a
+        sub_r_half_a = mink_vector.r_half_a - min_r_half_a
+        sub_std_a    = mink_vector.std_a    - min_std_a
+        sub_area_p   = mink_vector.area_p   - min_area_p
+        sub_r_half_p = mink_vector.r_half_p - min_r_half_p
+        sub_std_p    = mink_vector.std_p    - min_std_p
+        sub_mean     = mink_vector.mean     - min_mean
+        sub_std_mb   = mink_vector.std_mb   - min_std_mb
+        sub_kurtosis = mink_vector.kurtosis - min_kurtosis
+        sub_skewness = mink_vector.skewness - min_skewness
+        sub_area_e   = mink_vector.area_e   - min_area_e
+        sub_std_e    = mink_vector.std_e    - min_std_e
+        sub_is       = mink_vector.is       - min_is
+
+        max_area_a    = (max_area_a   < sub_area_a   ? sub_area_a   : max_area_a  )
+        max_r_half_a  = (max_r_half_a < sub_r_half_a ? sub_r_half_a : max_r_half_a)
+        max_std_a     = (max_std_a    < sub_std_a    ? sub_std_a    : max_std_a   )
+        max_area_p    = (max_area_p   < sub_area_p   ? sub_area_p   : max_area_p  )
+        max_r_half_p  = (max_r_half_p < sub_r_half_p ? sub_r_half_p : max_r_half_p)
+        max_std_p     = (max_std_p    < sub_std_p    ? sub_std_p    : max_std_p   )
+        max_mean      = (max_mean     < sub_mean     ? sub_mean     : max_mean    )
+        max_std_mb    = (max_std_mb   < sub_std_mb   ? sub_std_mb   : max_std_mb  )
+        max_kurtosis  = (max_kurtosis < sub_kurtosis ? sub_kurtosis : max_kurtosis)
+        max_skewness  = (max_skewness < sub_skewness ? sub_skewness : max_skewness)
+        max_area_e    = (max_area_e   < sub_area_e   ? sub_area_e   : max_area_e  )
+        max_std_e     = (max_std_e    < sub_std_e    ? sub_std_e    : max_std_e   )
+        max_is        = (max_is       < sub_is       ? sub_is       : max_is      )
+
+        sub_mink_vectors << NVector[
+          mink_vector.id,
+          mink_vector.scop_id,
+          mink_vector.sid,
+          mink_vector.sunid,
+          sub_area_a,
+          sub_r_half_a,
+          sub_std_a,
+          sub_area_p,
+          sub_r_half_p,
+          sub_std_p,
+          sub_mean,
+          sub_std_mb,
+          sub_kurtosis,
+          sub_skewness,
+          sub_area_e,
+          sub_std_e,
+          sub_is,
+        ]
+      end
+
+      sub_mink_vectors.each do |sub_mink_vector|
+        NormMinkVector.create!(
+          :mink_vector_id => sub_mink_vector[0],
+          :scop_id        => sub_mink_vector[1],
+          :sid            => sub_mink_vector[2],
+          :sunid          => sub_mink_vector[3],
+          :area_a         => sub_mink_vector[4]  / max_area_a,
+          :r_half_a       => sub_mink_vector[5]  / max_r_half_a,
+          :std_a          => sub_mink_vector[6]  / max_std_a,
+          :area_p         => sub_mink_vector[7]  / max_area_p,
+          :r_half_p       => sub_mink_vector[8]  / max_r_half_p,
+          :std_p          => sub_mink_vector[9]  / max_std_p,
+          :mean           => sub_mink_vector[10] / max_mean,
+          :std_mb         => sub_mink_vector[11] / max_std_mb,
+          :kurtosis       => sub_mink_vector[12] / max_kurtosis,
+          :skewness       => sub_mink_vector[13] / max_skewness,
+          :area_e         => sub_mink_vector[14] / max_area_e,
+          :std_e          => sub_mink_vector[15] / max_std_e,
+          :is             => sub_mink_vector[16] / max_is
+        )
+      end
+    end
+
   end
 end
