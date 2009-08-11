@@ -10,6 +10,14 @@ body {
   font-size: 100%;
 }
 
+hr {
+  clear: both;
+  width: 900px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
 h4 {
   padding: 5px;
 }
@@ -20,7 +28,9 @@ p {
 }
 
 ul {
-  margin-top: 0px;
+  margin-top: 10px;
+  padding-top: 10px;
+  text-align: left;
 }
 
 div.black_link a {
@@ -50,3 +60,29 @@ div.blue_link a:hover, a:active {
   color: #00F;
   text-decoration: underline;
 }
+
+div#main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+  text-align: center;
+}
+
+div#mink_search_form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  text-align: left;
+}
+
+div#mink_result {
+  text-align: left;
+}
+
+table #mink_search_form {
+}
+
+table#mink_search_form tr {
+  text-align: left;
+}
+

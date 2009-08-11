@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "news",       :controller => "main", :action => "news"
   map.connect "search",     :controller => "main", :action => "search"
   map.connect "references", :controller => "main", :action => "references"
-  map.connect "contact",    :controller => "main", :action => "contact"
+  map.connect "contacts",   :controller => "main", :action => "contacts"
 
   map.resources :scop_domains,  :key => :sunid
   map.resources :mink_searches, :as => :searches, :key => :uuid

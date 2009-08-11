@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string      :sccs
     t.string      :sid
     t.string      :description
+    t.boolean     :rep95, :default => false
   end
 
   add_index :scop, :sunid

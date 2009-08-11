@@ -10,24 +10,31 @@
   </head>
 
   <body>
-    <div>
-      <i>MINK: Mega fast, Incredibly easy, Notably Keen Structure Similarity Detector</i>
-    </div>
-    <div>
-      <%= link_to "Home", "/" %> |
-      <%= link_to "Browse", "#" %> |
-      <%= link_to "Search", new_mink_search_path %> |
-      <%= link_to "References", "#" %> |
-      <%= link_to "Contacts", "#" %>
-    </div>
-    <hr style="clear: both; width: 960px; margin-top: 10px;" />
 
-    <%= yield :layout %>
+    <div>
+      <h2><i>MINK: Mega fast, Incredibly easy, Notably Keen Structure Similarity Detector</i></h2>
+      <div class="black_link">
+        <%= link_to "Home", "/" %> |
+        <%= link_to "News", :controller => "main", :action => "news" %> |
+        <%= link_to "Browse", "#" %> |
+        <%= link_to "Search", new_mink_search_path %> |
+        <%= link_to "References", :controller => "main", :action => "references" %> |
+        <%= link_to "Contacts", :controller => "main", :action => "contacts" %>
+      </div>
+    </div>
 
-    <hr style="clear: both; width: 960px; margin-top: 10px;" />
+    <hr>
+
+    <div id="main"> 
+      <%= yield :layout %>
+    </div>
+
+    <hr>
+
     <div id="footer" class="black_link"> 
       &copy; 2009 <%= link_to "The Crystallography and Biocomputing Group", "http://www-cryst.bioc.cam.ac.uk", :popup => true %>, <%= link_to "Department of Biochemistry", "http://www.bioc.cam.ac.uk", :popup => true %>, <%= link_to "University of Cambridge", "http://www.cam.ac.uk", :popup => true %>, UK
     </div>
+
   </body>
 </html>
 

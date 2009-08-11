@@ -1,23 +1,21 @@
+<h3>Mink Search Result</h3>
+
 <% if @mink_search.finished_at.nil? %>
   <meta http-equiv="refresh" content="5"/>
-  <%=h @mink_search.status %> ... <%= "(#{@mink_search.progress} %)" if @mink_search.status == 'Searching' %>
-  <ul style="margin: 0; padding: 1em">
+  Status: <%=h @mink_search.status %> ... <%= "(#{@mink_search.progress} %)" if @mink_search.status == 'Searching' %>
+  <ul>
     <li>This page will refresh every 5 secs.
-    <li>You can leave this page and check results later from <%=link_to mink_search_url(@mink_search) %>.
-    <li>If you provide an email address, you will be notifed when job done.
+    <li>You can leave this page and check results later from <br /><%=link_to mink_search_url(@mink_search) %>
   </ul>
 <% else %>
-  <p><b>ID: </b><%=h @mink_search.id %></p> 
-  <p><b>Job ID: </b><%=h @mink_search.uuid %></p> 
-  <p><b>Cutoff: </b><%=h @mink_search.cutoff %></p> 
-  <p><b>Email: </b><%=h @mink_search.email %></p> 
-  <p><b>Hits: </b><%=h @mink_search.mink_search_hits.size %></p> 
-  <p><b>Started at: </b><%=h @mink_search.started_at %></p> 
-  <p><b>Finished at: </b><%=h @mink_search.finished_at %></p> 
-  <p><b>Elapsed time (seconds): </b><%=h @mink_search.elapsed_time %></p> 
-  <p><b>PDB file name: </b><%=h @mink_search.pdb_file_name %></p> 
-  <p><b>PDB file size (bytes): </b><%=h @mink_search.pdb_file_size %></p> 
-
-  <%= link_to 'Back', mink_searches_path %> 
+  <div id="mink_result">
+    <p><b>Job ID: </b><%=h @mink_search.uuid %></p> 
+    <p><b>Cutoff: </b><%=h @mink_search.cutoff %></p> 
+    <p><b>Hits: </b><%=h @mink_search.mink_search_hits.size %></p> 
+    <p><b>Started at: </b><%=h @mink_search.started_at %></p> 
+    <p><b>Finished at: </b><%=h @mink_search.finished_at %></p> 
+    <p><b>Elapsed time (seconds): </b><%=h @mink_search.elapsed_time %></p> 
+    <p><b>PDB file name: </b><%=h @mink_search.pdb_file_name %></p> 
+  </div>
 <% end %>
 

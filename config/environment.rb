@@ -55,9 +55,15 @@ Rails::Initializer.run do |config|
   }
 
   config.after_initialize do
-    configatron.username  = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
-    configatron.password  = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
-    configatron.mink      = Rails.root.join("bin", "mink")
-    configatron.minkproc  = Rails.root.join("bin", "minkproc")
+    configatron.username      = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
+    configatron.password      = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
+    configatron.mink          = Rails.root.join("bin", "mink")
+    configatron.minkproc      = Rails.root.join("bin", "minkproc")
+    configatron.mink_dir      = Rails.root.join("minkscop")
+    configatron.scop_pdb_dir  = Pathname.new("/BiO/Store/SCOP/pdbstyle")
+    configatron.fig_dir       = Rails.root.join("public", "figures")
+    configatron.scop_fig_dir  = configatron.fig_dir.join("scop")
+
+    require_dependency "scop"
   end
 end

@@ -14,7 +14,7 @@ class MainController < ApplicationController
     end
   end
 
-  def contact
+  def contacts
     respond_to do |format|
       format.html
     end

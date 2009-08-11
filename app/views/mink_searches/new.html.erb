@@ -1,16 +1,38 @@
+<h3>Mink Vector Search</h3>
+<table id="mink_search_form" align="center">
 <% form_for @mink_search, :html => { :multipart => true } do |f| %>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :cutoff %><br />
-    <%= f.text_field :cutoff %>
-  </p>
-  <p>
-    <%= f.file_field :pdb %>
-  </p>
-  <p>
-    <%= f.submit "Submit" %>
-  </p>
+  <tr>
+    <td>
+      PDB file
+    </td>
+    <td>
+      <%= f.file_field :pdb %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :cutoff %><sup>1</sup>
+    </td>
+    <td>
+      <%= f.text_field :cutoff %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :email %><sup>2</sup>
+    </td>
+    <td>
+      <%= f.text_field :email %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan=2 style="text-align: center">
+      <%= f.submit "Submit" %>
+    </td>
+  </tr>
 <% end %>
+</table>
+<ol style="margin: 0; padding: 1em; text-align: left;">
+  <li>We recommend you to use X.XX for maximum distance cutoff. According to the anlaysis we performed (link to article), X.XX roughly detect simlar structures at the SCOP super family level.
+  <li>If you provide a proper email address, you will be notifed when your job is done.
+</ol>
