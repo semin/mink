@@ -20,7 +20,11 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
 
-  config.gem "narray"
+  config.gem 'narray'
+  config.gem 'uuid'
+  config.gem 'configatron'
+  config.gem 'alexvollmer-daemon-spawn', :lib => 'daemon-spawn', :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -40,4 +44,20 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+
+  # config ActionMailer
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address        => "localhost",
+    :port           => 25,
+    :domain         => "cryst.bioc.cam.ac.uk",
+    :authentication => :plain,
+  }
+
+  config.after_initialize do
+    configatron.username  = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
+    configatron.password  = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
+    configatron.mink      = Rails.root.join("bin", "mink")
+    configatron.minkproc  = Rails.root.join("bin", "minkproc")
+  end
 end

@@ -14,3 +14,4 @@ db/sphinx
 config/*.sphinx.conf
 config/database.yml
 minkscop
+public/system

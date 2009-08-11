@@ -4,4 +4,6 @@ class NormMinkVector < ActiveRecord::Base
 
   belongs_to  :mink_vector
 
+  has_many :mink_search_hits
+
 end

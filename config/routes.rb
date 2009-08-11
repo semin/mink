@@ -12,12 +12,22 @@ ActionController::Routing::Routes.draw do |map|
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   map.resources :products
 
+  map.connect "",           :controller => "main", :action => "home"
+  map.connect "home",       :controller => "main", :action => "home"
+  map.connect "news",       :controller => "main", :action => "news"
+  map.connect "search",     :controller => "main", :action => "search"
+  map.connect "references", :controller => "main", :action => "references"
+  map.connect "contact",    :controller => "main", :action => "contact"
+
+  map.resources :scop_domains,  :key => :sunid
+  map.resources :mink_searches, :as => :searches, :key => :uuid
+
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments

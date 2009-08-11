@@ -8,6 +8,10 @@ class Scop < ActiveRecord::Base
 
   acts_as_nested_set
 
+  def to_param
+    self.sunid
+  end
+
   def self.factory_create!(opts={})
     case opts[:stype]
     when "root" then ScopRoot.create!(opts)
