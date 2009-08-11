@@ -1,0 +1,31 @@
+<h1>Mink Search Jobs</h1> 
+<table> 
+  <tr> 
+    <th>ID</th> 
+    <th>Job ID</th> 
+    <th>Cutoff</th> 
+    <th>Email</th> 
+    <th>Hits</th>
+    <th>Started at</th> 
+    <th>Finished at</th> 
+    <th>PDB file name</th>
+    <th>PDB file size</th>
+  </tr> 
+  <% for mink_search in @mink_searches %> 
+    <tr> 
+      <td><%=h mink_search.id %></td> 
+      <td><%=h mink_search.uuid %></td> 
+      <td><%=h mink_search.cutoff %></td> 
+      <td><%=h mink_search.email %></td> 
+      <td><%=h mink_search.mink_search_hits.size %></td> 
+      <td><%=h mink_search.started_at %></td> 
+      <td><%=h mink_search.finished_at %></td> 
+      <td><%=h mink_search.pdb_file_name %></td> 
+      <td><%=h mink_search.pdb_file_size %></td> 
+      <td><%= link_to 'Show', mink_search_path(mink_search) %></td> 
+      <td><%= link_to 'Destroy', mink_search_path(mink_search), :confirm => 'Are you sure?', :method => :delete %></td> 
+    </tr> 
+  <% end %> 
+</table> 
+
+<%= link_to "New Search", new_mink_search_url %>

@@ -1,0 +1,16 @@
+<% form_for @mink_search, :html => { :multipart => true } do |f| %>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :cutoff %><br />
+    <%= f.text_field :cutoff %>
+  </p>
+  <p>
+    <%= f.file_field :pdb %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>
