@@ -1,9 +1,10 @@
-require "narray"
-
 module Mink
   module Distance
 
     module ClassMethods
+
+      require "narray"
+
       def euclidean_distance_between(foo, bar)
         vec_foo = NVector[
           foo.area_a,

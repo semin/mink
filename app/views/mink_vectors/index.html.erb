@@ -1,9 +1,38 @@
-<h3>MINK Vectors for ASTRAL SCOP <%= Scop::version %> Domains (PID &lt; 95)</h3>
+<h3>ASTRAL SCOP <%= Scop::version %> Domains (PID &lt; 95)</h3>
 
-<%= will_paginate @mink_vectors %>
-<br />
+<% form_tag mink_vectors_path, :method => "get" do %>
+  <%= text_field_tag :query, params[:query], :size => 30 %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
 
-<%= render :partial => "mink_vector", :collection => @mink_vectors, :spacer_template => "/shared/list_spacer" %>
+<% if @query && !@query.empty? %>
+  <% if (@mink_vectors &&
+         @mink_vectors.size > 0 &&
+         @mink_vectors.total_entries > 0) %>
+         <h4>Query: <font color='green'><%= @query %></font>, Hits: <font color='green'><%= @mink_vectors.total_entries %></font></h4>
+    <%= will_paginate @mink_vectors %>
+    <br />
 
-<br />
-<%= will_paginate @mink_vectors %>
+    <%= render(:partial         => "mink_vector",
+              :collection      => @mink_vectors,
+              :spacer_template => "/shared/list_spacer") %>
+
+    <br />
+    <%= will_paginate @mink_vectors %>
+  <% else %>
+  <h4>Query: <font color='green'><%= @query %></font>, Hits: <font color='green'>0</font></h4>
+
+  Sorry. No hits found.
+  <% end %>
+<% else %>
+  <br />
+  <%= will_paginate @mink_vectors %>
+  <br />
+
+  <%= render(:partial         => "mink_vector",
+            :collection      => @mink_vectors,
+            :spacer_template => "/shared/list_spacer") %>
+
+  <br />
+  <%= will_paginate @mink_vectors %>
+<% end %>

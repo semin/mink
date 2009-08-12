@@ -9,6 +9,9 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
+# for Thinking in Sphinx
+require 'thinking_sphinx/tasks'
+
 include FileUtils
 
 RakeFileUtils.verbose(false)

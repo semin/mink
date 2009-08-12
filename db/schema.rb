@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.belongs_to  :scop
     t.string      :sid
     t.integer     :sunid
+    t.string      :sccs
     t.float       :area_a
     t.float       :r_half_a
     t.float       :std_a
@@ -63,6 +64,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :area_e
     t.float       :std_e
     t.float       :is
+    t.string      :scop_class_description
+    t.string      :scop_fold_description
+    t.string      :scop_superfamily_description
+    t.string      :scop_family_description
+    t.string      :scop_protein_description
+    t.string      :scop_species_description
+    t.string      :scop_domain_description
   end
 
   add_index :mink_vectors, :sid,    :unique => true

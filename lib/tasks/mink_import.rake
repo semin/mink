@@ -64,7 +64,7 @@ namespace :mink do
     desc "Import Minkowski vectors"
     task :mink_vectors => [:environment] do
 
-      vec_file = Rails.root.join("minkscop", "results", "vectors.dat")
+      vec_file = configatron.mink_dir.join("results", "vectors.dat")
 
       unless File.exists? vec_file
         $logger.error "!!! #{vec_file} doesn not exist"
@@ -84,6 +84,7 @@ namespace :mink do
 
           dom.create_mink_vector(:sid       => columns[0],
                                  :sunid     => dom.sunid,
+                                 :sccs      => dom.sccs,
                                  :area_a    => columns[1],
                                  :r_half_a  => columns[2],
                                  :std_a     => columns[3],
@@ -96,7 +97,14 @@ namespace :mink do
                                  :skewness  => columns[10],
                                  :area_e    => columns[11],
                                  :std_e     => columns[12],
-                                 :is        => columns[13])
+                                 :is        => columns[13],
+                                 :scop_class_description        => dom.scop_class.description,
+                                 :scop_fold_description         => dom.scop_fold.description,
+                                 :scop_superfamily_description  => dom.scop_superfamily.description,
+                                 :scop_family_description       => dom.scop_family.description,
+                                 :scop_protein_description      => dom.scop_protein.description,
+                                 :scop_species_description      => dom.scop_species.description,
+                                 :scop_domain_description       => dom.description)
         else
           $logger.warn "!!! Cannot recognize this line: #{line.chomp}"
           next

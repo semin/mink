@@ -15,13 +15,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "",           :controller => "main", :action => "home"
   map.connect "home",       :controller => "main", :action => "home"
   map.connect "news",       :controller => "main", :action => "news"
-  map.connect "search",     :controller => "main", :action => "search"
   map.connect "references", :controller => "main", :action => "references"
   map.connect "contacts",   :controller => "main", :action => "contacts"
 
-  #map.resources :scop_domains,  :key => :sunid
   map.resources :mink_vectors
-  map.resources :mink_searches, :as => :searches, :key => :uuid
+
+  map.resources :mink_searches, :key => :uuid
 
   # Sample resource route with options:
   #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }

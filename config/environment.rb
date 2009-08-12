@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'narray'
   config.gem 'uuid'
   config.gem 'configatron'
+  config.gem 'freelancing-god-thinking-sphinx', :lib => 'thinking_sphinx', :source => 'http://gems.github.com'
   config.gem 'alexvollmer-daemon-spawn', :lib => 'daemon-spawn', :source => 'http://gems.github.com'
   config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com'
 
@@ -64,6 +65,7 @@ Rails::Initializer.run do |config|
     configatron.fig_dir       = Rails.root.join("public", "figures")
     configatron.scop_fig_dir  = configatron.fig_dir.join("scop")
 
+    require 'mink/distance'
     require_dependency "scop"
   end
 end
