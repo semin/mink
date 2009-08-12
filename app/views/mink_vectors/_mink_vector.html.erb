@@ -1,0 +1,19 @@
+<div class="list blue_link">
+  <div class="small_image">
+    <%= link_to image_tag(mink_vector.scop_domain.small_image,
+                          :border => 0,
+                          :alt => mink_vector.scop_domain.sunid),
+                mink_vector_path(mink_vector)  %>
+  </div>
+  <div class="list_title">
+    <%= link_to "#{mink_vector.scop_domain.scop_protein.description}, " +
+                "#{mink_vector.scop_domain.description}",
+                mink_vector_path(mink_vector) %>
+  </div>
+  <div class="list_content">
+    SCOP sid:   <%= mink_vector.scop_domain.sid %><br />
+    SCOP sunid: <%= mink_vector.scop_domain.sunid %><br />
+    SCOP sccs:  <%= mink_vector.scop_domain.sccs  %><br />
+    SCOP species: <%= mink_vector.scop_domain.scop_species.description %><br />
+  </div>
+</div>

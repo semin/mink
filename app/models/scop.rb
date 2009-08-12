@@ -167,4 +167,12 @@ class ScopDomain < Scop
     residues.first.chain.model.structure
   end
 
+  def big_image
+    "/figures/scop/#{sid}-solo-500.png"
+  end
+
+  def small_image
+    "/figures/scop/#{sid}-solo-100.png"
+  end
+
 end

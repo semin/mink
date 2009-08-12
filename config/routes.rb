@@ -19,7 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "references", :controller => "main", :action => "references"
   map.connect "contacts",   :controller => "main", :action => "contacts"
 
-  map.resources :scop_domains,  :key => :sunid
+  #map.resources :scop_domains,  :key => :sunid
+  map.resources :mink_vectors
   map.resources :mink_searches, :as => :searches, :key => :uuid
 
   # Sample resource route with options:

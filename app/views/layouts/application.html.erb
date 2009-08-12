@@ -11,16 +11,16 @@
 
   <body>
 
-    <div>
+    <div id="header">
       <h2><i>MINK: Mega fast, Incredibly easy, Notably Keen Structure Similarity Detector</i></h2>
-      <div class="black_link">
-        <%= link_to "Home", "/" %> |
-        <%= link_to "News", :controller => "main", :action => "news" %> |
-        <%= link_to "Browse", "#" %> |
-        <%= link_to "Search", new_mink_search_path %> |
-        <%= link_to "References", :controller => "main", :action => "references" %> |
-        <%= link_to "Contacts", :controller => "main", :action => "contacts" %>
-      </div>
+    </div>
+    <div id="menu" class="black_link">
+      <%= link_to "Home", "/" %> |
+      <%= link_to "News", :controller => "main", :action => "news" %> |
+      <%= link_to "Browse", mink_vectors_path %> |
+      <%= link_to "Search", new_mink_search_path %> |
+      <%= link_to "References", :controller => "main", :action => "references" %> |
+      <%= link_to "Contacts", :controller => "main", :action => "contacts" %>
     </div>
 
     <hr>

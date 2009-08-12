@@ -1,0 +1,9 @@
+<h3>MINK Vectors for ASTRAL SCOP <%= Scop::version %> Domains (PID &lt; 95)</h3>
+
+<%= will_paginate @mink_vectors %>
+<br />
+
+<%= render :partial => "mink_vector", :collection => @mink_vectors, :spacer_template => "/shared/list_spacer" %>
+
+<br />
+<%= will_paginate @mink_vectors %>
