@@ -6,7 +6,14 @@ class MinkVector < ActiveRecord::Base
               :class_name   => "ScopDomain",
               :foreign_key  => "scop_id"
 
-  has_one :norm_mink_vector
+  has_one   :norm_mink_vector
+
+  has_many  :mink_vector_similarities
+
+  acts_as_network :similar_mink_vectors,
+                  :through                  => :mink_vector_similarities,
+                  :foreign_key              => 'mink_vector_id',
+                  :association_foreign_key  => 'similar_mink_vector_id'
 
   define_index do
     indexes sid

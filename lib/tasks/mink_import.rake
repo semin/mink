@@ -262,5 +262,35 @@ namespace :mink do
       )
     end
 
+
+    desc "Import mink_vector_similarities"
+    task :mink_vector_similarities => [:environment] do
+
+      mink_vectors = MinkVector.all
+      (0...mink_vectors.size-1).each do |i|
+        (i+1...mink_vectors.size).each do |j|
+          dist = mink_vectors[i].euclidean_distance_to mink_vectors[j]
+          MinkVectorSimilarity.create!(:mink_vector_id => mink_vectors[i].id,
+                                       :similar_mink_vector_id => mink_vectors[j].id,
+                                       :distance => dist)
+        end
+      end
+    end
+
+
+    desc "Import mink_vector_similarities"
+    task :norm_mink_vector_similarities => [:environment] do
+
+      norm_mink_vectors = NormMinkVector.all
+      (0...norm_mink_vectors.size-1).each do |i|
+        (i+1...norm_mink_vectors.size).each do |j|
+          dist = norm_mink_vectors[i].euclidean_distance_to norm_mink_vectors[j]
+          NormMinkVectorSimilarity.create!(:norm_mink_vector_id => norm_mink_vectors[i].id,
+                                           :similar_norm_mink_vector_id => norm_mink_vectors[j].id,
+                                           :distance => dist)
+        end
+      end
+    end
+
   end
 end

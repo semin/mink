@@ -147,6 +147,28 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :submax_is
   end
 
+
+  create_table :mink_vector_similarities, :force => true do |t|
+    t.belongs_to  :mink_vector
+    t.belongs_to  :similar_mink_vector
+    t.float       :distance
+  end
+
+  add_index :mink_vector_similarities, :distance
+  add_index :mink_vector_similarities, [:mink_vector_id, :similar_mink_vector_id], :name => "mink1_mink2"
+  add_index :mink_vector_similarities, [:similar_mink_vector_id, :mink_vector_id], :name => "mink2_mink1"
+
+
+  create_table :norm_mink_vector_similarities, :force => true do |t|
+    t.belongs_to  :norm_mink_vector
+    t.belongs_to  :similar_norm_mink_vector
+    t.float       :distance
+  end
+
+  add_index :norm_mink_vector_similarities, :distance
+  add_index :norm_mink_vector_similarities, [:norm_mink_vector_id, :similar_norm_mink_vector_id], :name => "norm_mink1_norm_mink2"
+  add_index :norm_mink_vector_similarities, [:similar_norm_mink_vector_id, :norm_mink_vector_id], :name => "norm_mink2_norm_mink1"
+
   create_table :mink_searches, :force => true do |t|
     t.float       :cutoff
     t.string      :uuid
