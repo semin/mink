@@ -32,7 +32,16 @@
     <hr>
 
     <div id="footer" class="black_link"> 
-      &copy; 2009 <%= link_to "The Crystallography and Biocomputing Group", "http://www-cryst.bioc.cam.ac.uk", :popup => true %>, <%= link_to "Department of Biochemistry", "http://www.bioc.cam.ac.uk", :popup => true %>, <%= link_to "University of Cambridge", "http://www.cam.ac.uk", :popup => true %>, UK
+      &copy; 2009 
+      <%= link_to"The Crystallography and Biocomputing Group", "http://www-cryst.bioc.cam.ac.uk", :popup => true %>,
+      <%= link_to "Department of Biochemistry", "http://www.bioc.cam.ac.uk", :popup => true %>,
+      <%= link_to "University of Cambridge", "http://www.cam.ac.uk", :popup => true %>,
+      UK
+    </div>
+
+    <div id="footer_banner">
+      <%= link_to image_tag("ruby_powered.png", :border => 0), "http://ruby-lang.org/", :popup => true %>
+      <%= link_to image_tag("rails_powered.png", :border => 0), "http://rubyonrails.org/", :popup => true %>
     </div>
 
   </body>

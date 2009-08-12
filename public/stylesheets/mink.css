@@ -130,3 +130,57 @@ div.list_title {
 div.list_content {
   font-size: 90%;
 }
+
+table.mink {
+  width: 95%;
+  text-align: left;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #666666;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+table.mink th {
+  text-align: center;
+  font-weight: bold;
+  font-size: 90%;
+  padding: 5px;
+  border: 1px solid #666666;
+}
+
+table.mink td {
+  font-size: 90%;
+  padding: 5px;
+  border: 1px solid #666666;
+}
+
+table.mink a {
+  color: #00F;
+}
+
+table.mink a:link, a:visited {
+  color: #00F;
+  text-decoration: none;
+}
+
+table.mink a:hover, a:active {
+  color: #00F;
+  text-decoration: underline;
+}
+
+table.mink tr.title, td.title {
+  margin: 0px;
+  font-weight: bold;
+}
+
+table.mink td.title_center {
+  text-align: center;
+}
+
+div#footer_banner {
+  margin-top: 5px;
+  text-align: center;
+}
+

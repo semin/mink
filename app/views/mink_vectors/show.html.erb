@@ -1,0 +1,70 @@
+<h3><%= @scop_domain.sid %></h3>
+
+<table id="mink_vector" align="center" class="mink">
+  <tr>
+    <th colspan=3>
+      SCOP Classification
+    </th>
+    <td rowspan=8 align="center">
+      <div id="image">
+        <%= image_tag @scop_domain.big_image, :width => 250, :border => 0 %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Class
+    </td>
+    <td>
+      <%= @scop_domain.scop_class.description  %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Fold
+    </td>
+    <td>
+      <%= @scop_domain.scop_fold.description  %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Superfamily
+    </td>
+    <td>
+      <%= @scop_domain.scop_superfamily.description %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Family
+    </td>
+    <td>
+      <%= @scop_domain.scop_family.description %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Protein
+    </td>
+    <td>
+      <%= @scop_domain.scop_protein.description %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Species
+    </td>
+    <td>
+      <%= @scop_domain.scop_species.description %>
+    </td>
+  </tr>
+  <tr>
+    <td class="title">
+      Domain
+    </td>
+    <td>
+      <%= @scop_domain.description %>
+    </td>
+  </tr>
+</table>

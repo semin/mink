@@ -20,6 +20,7 @@ class MinkVectorsController < ApplicationController
 
   def show
     @mink_vector = MinkVector.find(params[:id])
+    @scop_domain = @mink_vector.scop_domain
 
     respond_to do |format|
       format.html

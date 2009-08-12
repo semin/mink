@@ -5,7 +5,18 @@
   <%= submit_tag "Search", :name => nil %>
 <% end %>
 
-<% if @query && !@query.empty? %>
+<% if @query.blank? %>
+  <br />
+  <%= will_paginate @mink_vectors %>
+  <br />
+
+  <%= render(:partial         => "mink_vector",
+            :collection      => @mink_vectors,
+            :spacer_template => "/shared/list_spacer") %>
+
+  <br />
+  <%= will_paginate @mink_vectors %>
+<% else %>
   <% if (@mink_vectors &&
          @mink_vectors.size > 0 &&
          @mink_vectors.total_entries > 0) %>
@@ -20,19 +31,8 @@
     <br />
     <%= will_paginate @mink_vectors %>
   <% else %>
-  <h4>Query: <font color='green'><%= @query %></font>, Hits: <font color='green'>0</font></h4>
+    <h4>Query: <font color='green'><%= @query %></font>, Hits: <font color='green'>0</font></h4>
 
-  Sorry. No hits found.
+    Sorry. No hits found.
   <% end %>
-<% else %>
-  <br />
-  <%= will_paginate @mink_vectors %>
-  <br />
-
-  <%= render(:partial         => "mink_vector",
-            :collection      => @mink_vectors,
-            :spacer_template => "/shared/list_spacer") %>
-
-  <br />
-  <%= will_paginate @mink_vectors %>
 <% end %>
