@@ -267,13 +267,11 @@ namespace :mink do
     task :mink_vector_similarities => [:environment] do
 
       mink_vectors = MinkVector.all
-      (0...mink_vectors.size-1).each do |i|
-        (i+1...mink_vectors.size).each do |j|
-          dist = mink_vectors[i].euclidean_distance_to mink_vectors[j]
-          MinkVectorSimilarity.create!(:mink_vector_id => mink_vectors[i].id,
-                                       :similar_mink_vector_id => mink_vectors[j].id,
-                                       :distance => dist)
-        end
+      mink_vectors.combination(2).each do |mink_vector1, mink_vector2|
+        dist = mink_vector1.euclidean_distance_to mink_vector2
+        MinkVectorSimilarity.create!(:mink_vector_id          => mink_vector1,
+                                     :similar_mink_vector_id  => mink_vector2,
+                                     :distance                => dist)
       end
     end
 
@@ -282,13 +280,11 @@ namespace :mink do
     task :norm_mink_vector_similarities => [:environment] do
 
       norm_mink_vectors = NormMinkVector.all
-      (0...norm_mink_vectors.size-1).each do |i|
-        (i+1...norm_mink_vectors.size).each do |j|
-          dist = norm_mink_vectors[i].euclidean_distance_to norm_mink_vectors[j]
-          NormMinkVectorSimilarity.create!(:norm_mink_vector_id => norm_mink_vectors[i].id,
-                                           :similar_norm_mink_vector_id => norm_mink_vectors[j].id,
-                                           :distance => dist)
-        end
+      norm_mink_vectors.combination(2).each do |norm_mink_vector1, norm_mink_vector2|
+        dist = norm_mink_vector1.euclidean_distance_to norm_mink_vector2
+        MinkVectorSimilarity.create!(:norm_mink_vector_id         => norm_mink_vector1,
+                                     :similar_norm_mink_vector_id => norm_mink_vector2,
+                                     :distance                    => dist)
       end
     end
 
