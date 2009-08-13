@@ -19,8 +19,12 @@ class MinkVectorsController < ApplicationController
   end
 
   def show
-    @mink_vector = MinkVector.find(params[:id])
-    @scop_domain = @mink_vector.scop_domain
+    @mink_vector      = MinkVector.find(params[:id])
+    @norm_mink_vector = @mink_vector.norm_mink_vector
+    @scop_domain      = @mink_vector.scop_domain
+    @sorted_similar_norm_mink_vectors = @mink_vector.
+                                        norm_mink_vector.
+                                        sorted_similar_norm_mink_vectors.slice(0, 50)
 
     respond_to do |format|
       format.html

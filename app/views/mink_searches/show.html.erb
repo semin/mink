@@ -8,14 +8,97 @@
     <li>You can leave this page and check results later from <br /><%=link_to mink_search_url(@mink_search) %>
   </ul>
 <% else %>
-  <div id="mink_result">
-    <p><b>Job ID: </b><%=h @mink_search.uuid %></p> 
-    <p><b>Cutoff: </b><%=h @mink_search.cutoff %></p> 
-    <p><b>Hits: </b><%=h @mink_search.mink_search_hits.size %></p> 
-    <p><b>Started at: </b><%=h @mink_search.started_at %></p> 
-    <p><b>Finished at: </b><%=h @mink_search.finished_at %></p> 
-    <p><b>Elapsed time (seconds): </b><%=h @mink_search.elapsed_time %></p> 
-    <p><b>PDB file name: </b><%=h @mink_search.pdb_file_name %></p> 
-  </div>
+  <table id="user_mink_vector" align="center" class="mink">
+    <tr>
+      <th colspan=2>
+        Job Result
+      </th>
+      <td rowspan=8 align="center">
+        <%= image_tag @mink_search.big_image, :width => 250, :border => 0 %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Job ID
+      </td>
+      <td>
+        <%=h @mink_search.uuid  %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Distance Cutoff
+      </td>
+      <td>
+        <%=h @mink_search.cutoff %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        No. of Hits
+      </td>
+      <td>
+        <%=h @mink_search.mink_search_hits.size %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Started at
+      </td>
+      <td>
+        <%=h @mink_search.started_at %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Finished at
+      </td>
+      <td>
+        <%=h @mink_search.finished_at %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Elapsed Time
+      </td>
+      <td>
+        <%=h @mink_search.elapsed_time %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">
+        Uploaded PDB file
+      </td>
+      <td>
+        <%=h @mink_search.pdb_file_name %>
+      </td>
+    </tr>
+    <tr>
+      <th colspan=3>
+        Similar SCOP Domains based on MINK vector distance
+      </th>
+    </tr>
+    <tr>
+      <td colspan=3>
+        <table id="similar_mink_vector">
+          <% @sorted_mink_search_hits.in_groups_of(5) do |group| %>
+            <tr>
+              <% group.each do |other| %>
+                <td>
+                <% if other.nil? %>
+                  &nbsp;
+                <% else %>
+                  <%= image_tag other.norm_mink_vector.mink_vector.scop_domain.small_image %><br />
+                  Distance: <%= "%.5f" % @mink_search.euclidean_distance_to(other.norm_mink_vector) %><br />
+                  SCOP sid: <%= link_to other.norm_mink_vector.mink_vector.scop_domain.sid, mink_vector_path(other.norm_mink_vector.mink_vector) %><br />
+                  SCOP sccs: <%= other.norm_mink_vector.mink_vector.scop_domain.sccs %>
+                <% end %>
+              </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+    </tr>
+  </table>
 <% end %>
-

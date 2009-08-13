@@ -191,19 +191,19 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :area_e
     t.float       :std_e
     t.float       :is
-    t.float       :norm_area_a
-    t.float       :norm_r_half_a
-    t.float       :norm_std_a
-    t.float       :norm_area_p
-    t.float       :norm_r_half_p
-    t.float       :norm_std_p
-    t.float       :norm_mean
-    t.float       :norm_std_mb
-    t.float       :norm_kurtosis
-    t.float       :norm_skewness
-    t.float       :norm_area_e
-    t.float       :norm_std_e
-    t.float       :norm_is
+    t.float       :ori_area_a
+    t.float       :ori_r_half_a
+    t.float       :ori_std_a
+    t.float       :ori_area_p
+    t.float       :ori_r_half_p
+    t.float       :ori_std_p
+    t.float       :ori_mean
+    t.float       :ori_std_mb
+    t.float       :ori_kurtosis
+    t.float       :ori_skewness
+    t.float       :ori_area_e
+    t.float       :ori_std_e
+    t.float       :ori_is
     # columns for Paperclip plugin
     t.string      :pdb_file_name
     t.string      :pdb_content_type

@@ -2,20 +2,18 @@
 
 <table id="mink_vector" align="center" class="mink">
   <tr>
-    <th colspan=4>
+    <th colspan=2>
       SCOP Classification
     </th>
-    <td colspan=2 rowspan=8 align="center">
-      <div id="image">
-        <%= image_tag @scop_domain.big_image, :width => 250, :border => 0 %>
-      </div>
+    <td rowspan=8 align="center">
+      <%= image_tag @scop_domain.big_image, :width => 250, :border => 0 %>
     </td>
   </tr>
   <tr>
     <td class="title">
       Class
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.scop_class.description  %>
     </td>
   </tr>
@@ -23,7 +21,7 @@
     <td class="title">
       Fold
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.scop_fold.description  %>
     </td>
   </tr>
@@ -31,7 +29,7 @@
     <td class="title">
       Superfamily
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.scop_superfamily.description %>
     </td>
   </tr>
@@ -39,15 +37,15 @@
     <td class="title">
       Family
     </td>
-    <td colspan=3>
-      <%= @scop_domain.scop_family.description %>
+    <td>
+      <%= @scop_domain.scop_family.description %> (<%= @scop_domain.sccs %>)
     </td>
   </tr>
   <tr>
     <td class="title">
       Protein
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.scop_protein.description %>
     </td>
   </tr>
@@ -55,7 +53,7 @@
     <td class="title">
       Species
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.scop_species.description %>
     </td>
   </tr>
@@ -63,24 +61,35 @@
     <td class="title">
       Domain
     </td>
-    <td colspan=3>
+    <td>
       <%= @scop_domain.description %>
     </td>
   </tr>
   <tr>
-    <th colspan=6>
+    <th colspan=3>
       Similar SCOP Domains based on MINK vector distance
     </th>
   </tr>
   <tr>
-    <td colspan=2>
-      D1
-    </td>
-    <td colspan=2>
-      D2
-    </td>
-    <td colspan=2>
-      D3
+    <td colspan=3>
+      <table id="similar_mink_vector">
+        <% @sorted_similar_norm_mink_vectors.in_groups_of(5) do |group| %>
+          <tr>
+            <% group.each do |other| %>
+              <td>
+                <% if other.nil? %>
+                  &nbsp;
+                <% else %>
+                  <%= image_tag other.mink_vector.scop_domain.small_image %><br />
+                  Distance: <%= "%.5f" % @norm_mink_vector.euclidean_distance_to(other) %><br />
+                  SCOP sid: <%= link_to other.mink_vector.scop_domain.sid, mink_vector_path(other.mink_vector) %><br />
+                  SCOP sccs: <%= other.mink_vector.scop_domain.sccs %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
     </td>
   </tr>
 </table>

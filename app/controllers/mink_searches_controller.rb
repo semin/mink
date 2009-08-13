@@ -11,10 +11,16 @@ class MinkSearchesController < ApplicationController
   end
 
   def show
-    @mink_search = MinkSearch.find_by_uuid(params[:id])
+    if @mink_search = MinkSearch.find_by_uuid(params[:id])
+      @sorted_mink_search_hits = if !@mink_search.finished_at.nil?
+                                  @mink_search.mink_search_hits.sort_by(&:distance).slice(0, 50)
+                                end
 
-    respond_to do |format|
-      format.html
+      respond_to do |format|
+        format.html
+      end
+    else
+      redirect_to "/"
     end
   end
 
