@@ -15,7 +15,7 @@
       <h2><i>MINK: Mega fast, Incredibly easy, Notably Keen Structure Similarity Detector</i></h2>
     </div>
     <div id="menu" class="black_link">
-      <%= link_to "Home", "/" %> |
+      <%= link_to "Home", :controller => "main", :action => "home" %> |
       <%= link_to "News", :controller => "main", :action => "news" %> |
       <%= link_to "Browse", mink_vectors_path %> |
       <%= link_to "Search", new_mink_search_path %> |

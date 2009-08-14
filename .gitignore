@@ -16,3 +16,4 @@ config/database.yml
 public/system
 public/figures
 public/minkscop
+public/javascripts/all.js
