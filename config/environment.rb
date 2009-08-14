@@ -66,6 +66,7 @@ Rails::Initializer.run do |config|
     configatron.scop_fig_dir  = configatron.fig_dir.join("scop")
 
     require 'mink/distance'
+    require 'mink_search_job'
     require_dependency "scop"
   end
 end
