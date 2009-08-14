@@ -47,7 +47,7 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 
   # config ActionMailer
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.smtp_settings = {
     :address        => "localhost",
     :port           => 25,
