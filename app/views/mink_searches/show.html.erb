@@ -89,7 +89,7 @@
                   &nbsp;
                 <% else %>
                   <%= image_tag other.norm_mink_vector.mink_vector.scop_domain.small_image %><br />
-                  Distance: <%= "%.5f" % @mink_search.euclidean_distance_to(other.norm_mink_vector) %><br />
+                  Distance: <%= "%.3f" % @mink_search.euclidean_distance_to(other.norm_mink_vector) %><br />
                   SCOP sid: <%= link_to other.norm_mink_vector.mink_vector.scop_domain.sid, mink_vector_path(other.norm_mink_vector.mink_vector) %><br />
                   SCOP sccs: <%= other.norm_mink_vector.mink_vector.scop_domain.sccs %>
                 <% end %>
