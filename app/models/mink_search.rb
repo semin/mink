@@ -3,9 +3,20 @@ class MinkSearch < ActiveRecord::Base
   include Mink::Distance
   include FileUtils
 
+  has_many :mink_search_hits
+
   has_attached_file :pdb
 
-  has_many :mink_search_hits
+  validates_attachment_presence :pdb,
+                                :message => "file must be provided."
+
+  validates_attachment_size :pdb,
+                            :in => 1..1.megabyte,
+                            :message => "must be in range of 1 byte to 1 megabyte."
+
+  validates_numericality_of :cutoff,
+                            :greater_than_or_equal_to => 0,
+                            :less_than_or_equal_to => 1
 
   def to_param
     self.uuid

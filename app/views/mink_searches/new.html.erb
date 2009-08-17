@@ -2,6 +2,7 @@
 
 <table id="mink_search_form" align="center">
 <% form_for @mink_search, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages :message => nil %>
   <tr>
     <td>
       PDB file
