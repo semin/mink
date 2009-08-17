@@ -88,10 +88,6 @@ class MinkSearchJob < Struct.new(:mink_search_id)
     mink_search.elapsed_time  = mink_search.finished_at - mink_search.started_at
     mink_search.status        = 'Finished'
     mink_search.save!
-
-    # sending email
-    if mink_search.email
-      MinkSearchMailer.deliver_notification_email(mink_search)
-    end
   end
+
 end

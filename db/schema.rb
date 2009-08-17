@@ -172,7 +172,6 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table :mink_searches, :force => true do |t|
     t.float       :cutoff
     t.string      :uuid
-    t.string      :email
     t.timestamp   :started_at
     t.timestamp   :finished_at
     t.float       :elapsed_time

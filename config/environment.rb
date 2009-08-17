@@ -46,15 +46,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  # config ActionMailer
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.smtp_settings = {
-    :address        => "localhost",
-    :port           => 25,
-    :domain         => "cryst.bioc.cam.ac.uk",
-    :authentication => :plain,
-  }
-
   config.after_initialize do
     configatron.username      = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
     configatron.password      = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
