@@ -4,7 +4,7 @@
   <meta http-equiv="refresh" content="5"/>
   Status: <%=h @mink_search.status %> ... <%= "(#{@mink_search.progress} %)" if @mink_search.status == 'Searching' %>
   <ul>
-    <li>This page will refresh every 5 secs.
+    <li>This page will refresh every 5 secs. Please be patient.
     <li>You can leave this page and check results later from <br /><%=link_to mink_search_url(@mink_search) %>
   </ul>
 <% else %>
