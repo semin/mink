@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.belongs_to  :mink_vector
     t.string      :sid
     t.integer     :sunid
+    t.string      :sccs
     t.float       :area_a
     t.float       :r_half_a
     t.float       :std_a
