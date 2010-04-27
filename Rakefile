@@ -19,8 +19,11 @@ Rake.application.options.trace = true
 Rake.application.instance_variable_get(:@tasks).delete("db:schema:dump")
 namespace(:db) { namespace(:schema) { task(:dump) { puts "Schema dump disabled" } } }
 
-$logger = Logger.new(STDOUT)
-
-def logger
-  RAILS_DEFAULT_LOGGER
+class RakeLogger < Logger
+  def format_message(severity, timestamp, progname, msg)
+          "[#{timestamp.to_formatted_s(:db)} #{severity}] #{msg}\n"
+  end
 end
+
+$logger       = RakeLogger.new(STDOUT)
+$logger.level = RakeLogger::DEBUG

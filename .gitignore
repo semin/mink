@@ -15,5 +15,7 @@ config/*.sphinx.conf
 config/database.yml
 public/system
 public/figures
-public/minkscop
+public/scop
+public/cath
 public/javascripts/all.js
+

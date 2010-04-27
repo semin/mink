@@ -4,6 +4,10 @@ class NormMinkVector < ActiveRecord::Base
 
   belongs_to  :mink_vector
 
+  belongs_to  :scop_domain,
+              :class_name   => "ScopDomain",
+              :foreign_key  => "scop_id"
+
   has_many :mink_search_hits
 
   has_many  :norm_mink_vector_similarities

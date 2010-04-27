@@ -81,7 +81,12 @@
                   &nbsp;
                 <% else %>
                   <%= image_tag other.mink_vector.scop_domain.small_image %><br />
-                  Distance: <%= "%.3f" % @norm_mink_vector.euclidean_distance_to(other) %><br />
+                  MINK distance: <%= "%.3f" % @norm_mink_vector.euclidean_distance_to(other) %><br />
+                  <% @norm_mink_vector.scop_domain.norm_gi_vectors.each do |norm_gi_vector| %>
+                    <% other.scop_domain.norm_gi_vectors.each do |other_norm_gi_vector| %>
+                      GI distance: <%= "%.3f" % norm_gi_vector.euclidean_distance_to(other_norm_gi_vector) %><br />
+                    <% end %>
+                  <% end %>
                   SCOP sid: <%= link_to other.mink_vector.scop_domain.sid, mink_vector_path(other.mink_vector) %><br />
                   SCOP sccs: <%= other.mink_vector.scop_domain.sccs %>
                 <% end %>

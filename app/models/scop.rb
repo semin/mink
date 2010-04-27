@@ -91,6 +91,12 @@ class ScopDomain < Scop
   has_one :norm_mink_vector,
           :foreign_key  => :scop_id
 
+  has_many  :gi_vectors,
+            :foreign_key  => :scop_id
+
+  has_many  :norm_gi_vectors,
+            :foreign_key  => :scop_id
+
   named_scope :rep95, :conditions => { :rep95 => true }
 
   def self.find_all_by_pdb_code(pdb_code)

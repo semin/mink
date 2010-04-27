@@ -22,10 +22,11 @@ Rails::Initializer.run do |config|
 
   config.gem 'narray'
   config.gem 'uuid'
-  config.gem 'configatron'
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx'
-  config.gem 'daemon-spawn'
   config.gem 'paperclip'
+  config.gem 'configatron'
+  config.gem 'daemon-spawn'
+  config.gem 'ar-extensions'
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.16'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -47,17 +48,46 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 
   config.after_initialize do
-    configatron.username      = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
-    configatron.password      = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
-    configatron.scop_pdb_dir  = Pathname.new("/BiO/Store/SCOP/pdbstyle")
-    configatron.mink          = Rails.root.join("bin", "mink")
-    configatron.minkproc      = Rails.root.join("bin", "minkproc")
-    configatron.mink_dir      = Rails.root.join("public", "minkscop")
-    configatron.fig_dir       = Rails.root.join("public", "figures")
-    configatron.scop_fig_dir  = configatron.fig_dir.join("scop")
+    configatron.username            = '26e60a40d5d5e3d64afd5058600bc67f9e2714c0'
+    configatron.password            = '7dad210b9683a031ab75ce48ce3f40dafbc44c3a'
+
+    configatron.scop_dir            = Pathname.new("/merlin/Store/SCOP")
+
+    configatron.bin_dir             = Rails.root.join("bin")
+    configatron.mink                = configatron.bin_dir.join("mink")
+    configatron.minkproc            = configatron.bin_dir.join("minkproc")
+    configatron.batch_mink          = configatron.bin_dir.join("batch_mink.py")
+    configatron.proc_mink           = configatron.bin_dir.join("proc_mink.py")
+    configatron.gi                  = configatron.bin_dir.join("GI")
+
+    configatron.pub_dir             = Rails.root.join("public")
+    configatron.mink_dir            = configatron.pub_dir.join("mink")
+    configatron.fig_dir             = configatron.pub_dir.join("figures")
+    configatron.scop_fig_dir        = configatron.fig_dir.join("scop")
+    configatron.mink_scop_dir       = configatron.pub_dir.join("scop")
+    configatron.mink_scop_gi_dir    = configatron.mink_scop_dir.join("gi")
+    configatron.mink_scop_pdb_dir   = configatron.mink_scop_dir.join("pdb")
+    configatron.mink_scop_mink_dir  = configatron.mink_scop_dir.join("mink")
+
+    configatron.src_dir                 = Rails.root.join("src")
+    configatron.bin_dir                 = Rails.root.join("bin")
+    configatron.calculate_distances_src = configatron.src_dir.join("calculate_distances.c")
+    configatron.calculate_distances_bin = configatron.bin_dir.join("calculate_distances")
+
+    configatron.tmp_dir               = Rails.root.join("tmp")
+    configatron.mink_vectors_csv      = configatron.tmp_dir.join("mink_vectors.csv")
+    configatron.norm_mink_vectors_csv = configatron.tmp_dir.join("norm_mink_vectors.csv")
+    configatron.gi_vectors_csv        = configatron.tmp_dir.join("gi_vectors.csv")
+    configatron.norm_gi_vectors_csv   = configatron.tmp_dir.join("norm_gi_vectors.csv")
+    configatron.mink_vector_similarities_csv      = configatron.tmp_dir.join("mink_vector_similarities.csv")
+    configatron.norm_mink_vector_similarities_csv = configatron.tmp_dir.join("norm_mink_vector_similarities.csv")
+    configatron.gi_vector_similarities_csv        = configatron.tmp_dir.join("gi_vector_similarities.csv")
+    configatron.norm_gi_vector_similarities_csv   = configatron.tmp_dir.join("norm_gi_vector_similarities.csv")
 
     require 'mink/distance'
+    require 'gi/distance'
     require 'mink_search_job'
     require_dependency "scop"
+
   end
 end
