@@ -328,32 +328,32 @@ namespace :import do
                              :chain_code                    => cc,
                              :cas                           => columns[2],
                              :cas_missing                   => columns[3],
-                             :int12                         => columns[4],
-                             :inta12                        => columns[5],
-                             :int12_34                      => columns[6],
-                             :inta12_34                     => columns[7],
-                             :int12_a34                     => columns[8],
-                             :inta12_a34                    => columns[9],
-                             :int13_24                      => columns[10],
-                             :inta13_24                     => columns[11],
-                             :int13_a24                     => columns[12],
-                             :inta13_a24                    => columns[13],
-                             :int14_23                      => columns[14],
-                             :inta14_23                     => columns[15],
-                             :int14_a23                     => columns[16],
-                             :inta14_a23                    => columns[17],
-                             :int12_34_56                   => columns[18],
-                             :int12_35_46                   => columns[19],
-                             :int12_36_45                   => columns[20],
-                             :int13_24_56                   => columns[21],
-                             :int13_25_46                   => columns[22],
-                             :int13_26_45                   => columns[23],
-                             :int14_23_56                   => columns[24],
-                             :int14_25_36                   => columns[25],
-                             :int14_26_35                   => columns[26],
-                             :int15_23_46                   => columns[27],
-                             :int15_24_36                   => columns[28],
-                             :int15_26_34                   => columns[29],
+                             :length                        => columns[4],
+                             :int12                         => columns[5],
+                             :inta12                        => columns[6],
+                             :int12_34                      => columns[7],
+                             :inta12_34                     => columns[8],
+                             :int12_a34                     => columns[9],
+                             :inta12_a34                    => columns[10],
+                             :int13_24                      => columns[11],
+                             :inta13_24                     => columns[12],
+                             :int13_a24                     => columns[13],
+                             :inta13_a24                    => columns[14],
+                             :int14_23                      => columns[15],
+                             :inta14_23                     => columns[16],
+                             :int14_a23                     => columns[17],
+                             :inta14_a23                    => columns[18],
+                             :int12_34_56                   => columns[19],
+                             :int12_35_46                   => columns[20],
+                             :int12_36_45                   => columns[21],
+                             :int13_24_56                   => columns[22],
+                             :int13_25_46                   => columns[23],
+                             :int13_26_45                   => columns[24],
+                             :int14_23_56                   => columns[25],
+                             :int14_25_36                   => columns[26],
+                             :int14_26_35                   => columns[27],
+                             :int15_23_46                   => columns[28],
+                             :int15_24_36                   => columns[29],
                              :int15_26_34                   => columns[30],
                              :int16_23_45                   => columns[31],
                              :int16_24_35                   => columns[32],
@@ -373,6 +373,7 @@ namespace :import do
   desc "Import Normalized GI vectors"
   task :norm_gi_vectors => [:environment] do
 
+    min_length     , max_length      = GiVector.minimum(:length)     , GiVector.maximum(:length)
     min_int12      , max_int12       = GiVector.minimum(:int12)      , GiVector.maximum(:int12)
     min_inta12     , max_inta12      = GiVector.minimum(:inta12)     , GiVector.maximum(:inta12)
     min_int12_34   , max_int12_34    = GiVector.minimum(:int12_34)   , GiVector.maximum(:int12_34)
@@ -399,11 +400,11 @@ namespace :import do
     min_int15_23_46, max_int15_23_46 = GiVector.minimum(:int15_23_46), GiVector.maximum(:int15_23_46)
     min_int15_24_36, max_int15_24_36 = GiVector.minimum(:int15_24_36), GiVector.maximum(:int15_24_36)
     min_int15_26_34, max_int15_26_34 = GiVector.minimum(:int15_26_34), GiVector.maximum(:int15_26_34)
-    min_int15_26_34, max_int15_26_34 = GiVector.minimum(:int15_26_34), GiVector.maximum(:int15_26_34)
     min_int16_23_45, max_int16_23_45 = GiVector.minimum(:int16_23_45), GiVector.maximum(:int16_23_45)
     min_int16_24_35, max_int16_24_35 = GiVector.minimum(:int16_24_35), GiVector.maximum(:int16_24_35)
     min_int16_25_34, max_int16_25_34 = GiVector.minimum(:int16_25_34), GiVector.maximum(:int16_25_34)
 
+    submax_length      = max_length      - min_length
     submax_int12       = max_int12       - min_int12
     submax_inta12      = max_inta12      - min_inta12
     submax_int12_34    = max_int12_34    - min_int12_34
@@ -430,7 +431,6 @@ namespace :import do
     submax_int15_23_46 = max_int15_23_46 - min_int15_23_46
     submax_int15_24_36 = max_int15_24_36 - min_int15_24_36
     submax_int15_26_34 = max_int15_26_34 - min_int15_26_34
-    submax_int15_26_34 = max_int15_26_34 - min_int15_26_34
     submax_int16_23_45 = max_int16_23_45 - min_int16_23_45
     submax_int16_24_35 = max_int16_24_35 - min_int16_24_35
     submax_int16_25_34 = max_int16_25_34 - min_int16_25_34
@@ -445,6 +445,7 @@ namespace :import do
         :chain_code   => gi_vector.chain_code,
         :cas          => gi_vector.cas,
         :cas_missing  => gi_vector.cas_missing,
+        :length       => (gi_vector.length      - min_length     ) / submax_length,
         :int12        => (gi_vector.int12       - min_int12      ) / submax_int12,
         :inta12       => (gi_vector.inta12      - min_inta12     ) / submax_inta12,
         :int12_34     => (gi_vector.int12_34    - min_int12_34   ) / submax_int12_34,
@@ -471,7 +472,6 @@ namespace :import do
         :int15_23_46  => (gi_vector.int15_23_46 - min_int15_23_46) / submax_int15_23_46,
         :int15_24_36  => (gi_vector.int15_24_36 - min_int15_24_36) / submax_int15_24_36,
         :int15_26_34  => (gi_vector.int15_26_34 - min_int15_26_34) / submax_int15_26_34,
-        :int15_26_34  => (gi_vector.int15_26_34 - min_int15_26_34) / submax_int15_26_34,
         :int16_23_45  => (gi_vector.int16_23_45 - min_int16_23_45) / submax_int16_23_45,
         :int16_24_35  => (gi_vector.int16_24_35 - min_int16_24_35) / submax_int16_24_35,
         :int16_25_34  => (gi_vector.int16_25_34 - min_int16_25_34) / submax_int16_25_34,
@@ -486,6 +486,7 @@ namespace :import do
     end
 
     GiValue.create!(
+      :min_length         => min_length,
       :min_int12          => min_int12,
       :min_inta12         => min_inta12,
       :min_int12_34       => min_int12_34,
@@ -512,10 +513,10 @@ namespace :import do
       :min_int15_23_46    => min_int15_23_46,
       :min_int15_24_36    => min_int15_24_36,
       :min_int15_26_34    => min_int15_26_34,
-      :min_int15_26_34    => min_int15_26_34,
       :min_int16_23_45    => min_int16_23_45,
       :min_int16_24_35    => min_int16_24_35,
       :min_int16_25_34    => min_int16_25_34,
+      :max_length         => max_length,
       :max_int12          => max_int12,
       :max_inta12         => max_inta12,
       :max_int12_34       => max_int12_34,
@@ -542,10 +543,10 @@ namespace :import do
       :max_int15_23_46    => max_int15_23_46,
       :max_int15_24_36    => max_int15_24_36,
       :max_int15_26_34    => max_int15_26_34,
-      :max_int15_26_34    => max_int15_26_34,
       :max_int16_23_45    => max_int16_23_45,
       :max_int16_24_35    => max_int16_24_35,
       :max_int16_25_34    => max_int16_25_34,
+      :submax_length      => submax_length,
       :submax_int12       => submax_int12,
       :submax_inta12      => submax_inta12,
       :submax_int12_34    => submax_int12_34,
@@ -571,7 +572,6 @@ namespace :import do
       :submax_int14_26_35 => submax_int14_26_35,
       :submax_int15_23_46 => submax_int15_23_46,
       :submax_int15_24_36 => submax_int15_24_36,
-      :submax_int15_26_34 => submax_int15_26_34,
       :submax_int15_26_34 => submax_int15_26_34,
       :submax_int16_23_45 => submax_int16_23_45,
       :submax_int16_24_35 => submax_int16_24_35,

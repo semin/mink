@@ -1,4 +1,5 @@
-#!/usr/bin/spython
+#!/usr/local/stackless-python/bin/python
+
 import os
 import os.path
 import sys

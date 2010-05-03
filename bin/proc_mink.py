@@ -28,15 +28,16 @@ for file in files:
     d = []
     for line in lines:
         tokens = line.split()
-        try:
-            p.append(int(tokens[0]))
-            a.append(int(tokens[1])/1000)
-            b.append(int(tokens[2])/1000)
-            c.append(int(tokens[3]))
-            d.append(int(tokens[4]))
-        except ValueError:
-            #print "Values: ", tokens[0], tokens[1], tokens[2], tokens[3], tokens[5]
-            print line
+        if len(tokens) == 5:
+            try:
+                p.append(int(tokens[0]))
+                a.append(int(tokens[1])/1000)
+                b.append(int(tokens[2])/1000)
+                c.append(int(tokens[3]))
+                d.append(int(tokens[4]))
+            except ValueError:
+                #print "Values: ", tokens[0], tokens[1], tokens[2], tokens[3], tokens[5]
+                print line
 
     p = np.array(p)
     a = np.array(a)

@@ -152,6 +152,7 @@ namespace :generate do
       GiVector.find_each do |gi_vector|
         file.puts [
           gi_vector.id,
+          gi_vector.length,
           gi_vector.int12,
           gi_vector.inta12,
           gi_vector.int12_34,
@@ -177,7 +178,6 @@ namespace :generate do
           gi_vector.int14_26_35,
           gi_vector.int15_23_46,
           gi_vector.int15_24_36,
-          gi_vector.int15_26_34,
           gi_vector.int15_26_34,
           gi_vector.int16_23_45,
           gi_vector.int16_24_35,
@@ -215,6 +215,7 @@ namespace :generate do
       NormGiVector.find_each do |norm_gi_vector|
         file.puts [
           norm_gi_vector.id,
+          norm_gi_vector.length,
           norm_gi_vector.int12,
           norm_gi_vector.inta12,
           norm_gi_vector.int12_34,
@@ -241,7 +242,6 @@ namespace :generate do
           norm_gi_vector.int15_23_46,
           norm_gi_vector.int15_24_36,
           norm_gi_vector.int15_26_34,
-          norm_gi_vector.int15_26_34,
           norm_gi_vector.int16_23_45,
           norm_gi_vector.int16_24_35,
           norm_gi_vector.int16_25_34
@@ -266,6 +266,32 @@ namespace :generate do
 
     sh cmd
     $logger.info "Generating #{dmp}: done"
+  end
+
+
+  desc "Generate a plot showing correlation between GI and MINK"
+  task :correlation_mink_gi_csv => [:environment] do
+
+    file = File.open("./tmp/mink-gi_distance.csv", "w")
+    file.puts ["MINK", "GI"].join(',')
+
+    NormMinkVectorSimilarity.find_each do |norm_mink_vector_similarity|
+      norm_mink_vector1 = norm_mink_vector_similarity.norm_mink_vector
+      norm_mink_vector2 = norm_mink_vector_similarity.norm_mink_vector_target
+      domain1 = norm_mink_vector1.scop_domain
+      domain2 = norm_mink_vector2.scop_domain
+
+      if ((domain1.norm_gi_vectors.size == 1) &&
+          (domain2.norm_gi_vectors.size == 1))
+        gi_vector1    = domain1.norm_gi_vectors.first
+        gi_vector2    = domain2.norm_gi_vectors.first
+        gi_distance   = gi_vector1.euclidean_distance_to gi_vector2
+        mink_distance = norm_mink_vector_similarity.distance
+
+        file.puts [mink_distance, gi_distance].join(',')
+      end
+    end
+    file.close
   end
 
 end

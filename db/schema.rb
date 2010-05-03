@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
 
-  create_table :scop, :force => true do |t|
+  create_table :scops, :force => true do |t|
     t.belongs_to  :parent
     t.integer     :lft
     t.integer     :rgt
@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(:version => 0) do
     t.boolean     :rep95, :default => false
   end
 
-  add_index :scop, :sunid
-  add_index :scop, :parent_id
-  add_index :scop, :lft
-  add_index :scop, :rgt
-  add_index :scop, [:id, :type]
+  add_index :scops, :sunid
+  add_index :scops, :parent_id
+  add_index :scops, :lft
+  add_index :scops, :rgt
+  add_index :scops, [:id, :type]
 
 
   create_table :mink_vectors, :force => true do |t|
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string      :chain_code
     t.integer     :cas
     t.integer     :cas_missing
+    t.float       :length
     t.float       :int12
     t.float       :inta12
     t.float       :int12_34
@@ -265,7 +266,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :int14_26_35
     t.float       :int15_23_46
     t.float       :int15_24_36
-    t.float       :int15_26_34
     t.float       :int15_26_34
     t.float       :int16_23_45
     t.float       :int16_24_35
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string      :chain_code
     t.integer     :cas
     t.integer     :cas_missing
+    t.float       :length
     t.float       :int12
     t.float       :inta12
     t.float       :int12_34
@@ -318,7 +319,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float       :int15_23_46
     t.float       :int15_24_36
     t.float       :int15_26_34
-    t.float       :int15_26_34
     t.float       :int16_23_45
     t.float       :int16_24_35
     t.float       :int16_25_34
@@ -336,6 +336,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
 
   create_table :gi_values, :force => true do |t|
+    t.float :min_length
     t.float :min_int12
     t.float :min_inta12
     t.float :min_int12_34
@@ -362,10 +363,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float :min_int15_23_46
     t.float :min_int15_24_36
     t.float :min_int15_26_34
-    t.float :min_int15_26_34
     t.float :min_int16_23_45
     t.float :min_int16_24_35
     t.float :min_int16_25_34
+    t.float :max_length
     t.float :max_int12
     t.float :max_inta12
     t.float :max_int12_34
@@ -392,10 +393,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float :max_int15_23_46
     t.float :max_int15_24_36
     t.float :max_int15_26_34
-    t.float :max_int15_26_34
     t.float :max_int16_23_45
     t.float :max_int16_24_35
     t.float :max_int16_25_34
+    t.float :submax_length
     t.float :submax_int12
     t.float :submax_inta12
     t.float :submax_int12_34
@@ -421,7 +422,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float :submax_int14_26_35
     t.float :submax_int15_23_46
     t.float :submax_int15_24_36
-    t.float :submax_int15_26_34
     t.float :submax_int15_26_34
     t.float :submax_int16_23_45
     t.float :submax_int16_24_35

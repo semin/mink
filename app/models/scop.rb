@@ -4,8 +4,6 @@ class Scop < ActiveRecord::Base
 
   @@version = "1.75"
 
-  set_table_name :scop
-
   acts_as_nested_set
 
   def to_param
