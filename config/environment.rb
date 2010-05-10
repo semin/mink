@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'configatron'
   config.gem 'daemon-spawn'
   config.gem 'ar-extensions'
+  config.gem 'parallel-forkmanager', :lib => 'forkmanager'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.16'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
@@ -66,6 +67,7 @@ Rails::Initializer.run do |config|
     configatron.scop_fig_dir        = configatron.fig_dir.join("scop")
     configatron.mink_scop_dir       = configatron.pub_dir.join("scop")
     configatron.mink_scop_gi_dir    = configatron.mink_scop_dir.join("gi")
+    configatron.mink_scop_git_dir   = configatron.mink_scop_dir.join("git")
     configatron.mink_scop_pdb_dir   = configatron.mink_scop_dir.join("pdb")
     configatron.mink_scop_mink_dir  = configatron.mink_scop_dir.join("mink")
 
@@ -73,16 +75,25 @@ Rails::Initializer.run do |config|
     configatron.bin_dir                 = Rails.root.join("bin")
     configatron.calculate_distances_src = configatron.src_dir.join("calculate_distances.c")
     configatron.calculate_distances_bin = configatron.bin_dir.join("calculate_distances")
+    configatron.gi_src                  = configatron.src_dir.join("GI.c")
+    configatron.gi_bin                  = configatron.bin_dir.join("GI")
+    configatron.git_src                 = configatron.src_dir.join("GIT.c")
+    configatron.git_bin                 = configatron.bin_dir.join("GIT")
+    configatron.avg_gauss_tbl_smt_rep   = configatron.mink_scop_dir.join("AverageGaussTableSmoothRepresentation")
 
     configatron.tmp_dir               = Rails.root.join("tmp")
     configatron.mink_vectors_csv      = configatron.tmp_dir.join("mink_vectors.csv")
     configatron.norm_mink_vectors_csv = configatron.tmp_dir.join("norm_mink_vectors.csv")
     configatron.gi_vectors_csv        = configatron.tmp_dir.join("gi_vectors.csv")
+    configatron.git_vectors_csv       = configatron.tmp_dir.join("git_vectors.csv")
     configatron.norm_gi_vectors_csv   = configatron.tmp_dir.join("norm_gi_vectors.csv")
+    configatron.norm_git_vectors_csv  = configatron.tmp_dir.join("norm_git_vectors.csv")
     configatron.mink_vector_similarities_csv      = configatron.tmp_dir.join("mink_vector_similarities.csv")
     configatron.norm_mink_vector_similarities_csv = configatron.tmp_dir.join("norm_mink_vector_similarities.csv")
     configatron.gi_vector_similarities_csv        = configatron.tmp_dir.join("gi_vector_similarities.csv")
+    configatron.git_vector_similarities_csv       = configatron.tmp_dir.join("git_vector_similarities.csv")
     configatron.norm_gi_vector_similarities_csv   = configatron.tmp_dir.join("norm_gi_vector_similarities.csv")
+    configatron.norm_git_vector_similarities_csv  = configatron.tmp_dir.join("norm_git_vector_similarities.csv")
 
     require 'mink/distance'
     require 'gi/distance'

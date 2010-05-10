@@ -95,6 +95,12 @@ class ScopDomain < Scop
   has_many  :norm_gi_vectors,
             :foreign_key  => :scop_id
 
+  has_many  :git_vectors,
+            :foreign_key  => :scop_id
+
+  has_many  :norm_git_vectors,
+            :foreign_key  => :scop_id
+
   named_scope :rep95, :conditions => { :rep95 => true }
 
   def self.find_all_by_pdb_code(pdb_code)

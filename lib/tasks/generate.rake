@@ -269,6 +269,131 @@ namespace :generate do
   end
 
 
+  desc "Generate a GIT vector table file in CSV format"
+  task :git_vectors_csv => [:environment] do
+
+    csv = configatron.git_vectors_csv
+
+    File.open(csv, 'w') do |file|
+      GitVector.find_each do |git_vector|
+        file.puts [
+          git_vector.id,
+          git_vector.measure1 ,
+          git_vector.measure2 ,
+          git_vector.measure3 ,
+          git_vector.measure4 ,
+          git_vector.measure5 ,
+          git_vector.measure6 ,
+          git_vector.measure7 ,
+          git_vector.measure8 ,
+          git_vector.measure9 ,
+          git_vector.measure10,
+          git_vector.measure11,
+          git_vector.measure12,
+          git_vector.measure13,
+          git_vector.measure14,
+          git_vector.measure15,
+          git_vector.measure16,
+          git_vector.measure17,
+          git_vector.measure18,
+          git_vector.measure19,
+          git_vector.measure20,
+          git_vector.measure21,
+          git_vector.measure22,
+          git_vector.measure23,
+          git_vector.measure24,
+          git_vector.measure25,
+          git_vector.measure26,
+          git_vector.measure27,
+          git_vector.measure28,
+          git_vector.measure29,
+          git_vector.measure30,
+        ].join(',')
+      end
+    end
+    $logger.info "Generating #{csv}: done"
+  end
+
+
+  desc "Generate a GIT vector similarity table file in CSV format"
+  task :git_vector_similarities_csv => [:environment] do
+
+    csv = configatron.git_vectors_csv
+    dmp = configatron.git_vector_similarities_csv
+    cmd = [
+      configatron.calculate_distances_bin,
+      "30", "<",
+      csv.to_s,
+      ">", dmp
+    ].join(' ')
+
+    sh cmd
+    $logger.info "Generating #{dmp}: done"
+  end
+
+
+  desc "Generate a normalized GIT vector table file in CSV format"
+  task :norm_git_vectors_csv => [:environment] do
+
+    csv = configatron.norm_git_vectors_csv
+
+    File.open(csv, 'w') do |file|
+      NormGitVector.find_each do |norm_git_vector|
+        file.puts [
+          norm_git_vector.id,
+          norm_git_vector.measure1 ,
+          norm_git_vector.measure2 ,
+          norm_git_vector.measure3 ,
+          norm_git_vector.measure4 ,
+          norm_git_vector.measure5 ,
+          norm_git_vector.measure6 ,
+          norm_git_vector.measure7 ,
+          norm_git_vector.measure8 ,
+          norm_git_vector.measure9 ,
+          norm_git_vector.measure10,
+          norm_git_vector.measure11,
+          norm_git_vector.measure12,
+          norm_git_vector.measure13,
+          norm_git_vector.measure14,
+          norm_git_vector.measure15,
+          norm_git_vector.measure16,
+          norm_git_vector.measure17,
+          norm_git_vector.measure18,
+          norm_git_vector.measure19,
+          norm_git_vector.measure20,
+          norm_git_vector.measure21,
+          norm_git_vector.measure22,
+          norm_git_vector.measure23,
+          norm_git_vector.measure24,
+          norm_git_vector.measure25,
+          norm_git_vector.measure26,
+          norm_git_vector.measure27,
+          norm_git_vector.measure28,
+          norm_git_vector.measure29,
+          norm_git_vector.measure30,
+        ].join(',')
+      end
+    end
+    $logger.info "Generating #{csv}: done"
+  end
+
+
+  desc "Generate a normalized GIT vector similarity table file in CSV format"
+  task :norm_git_vector_similarities_csv => [:environment] do
+
+    csv = configatron.norm_git_vectors_csv
+    dmp = configatron.norm_git_vector_similarities_csv
+    cmd = [
+      configatron.calculate_distances_bin,
+      "30", "<",
+      csv.to_s,
+      ">", dmp
+    ].join(' ')
+
+    sh cmd
+    $logger.info "Generating #{dmp}: done"
+  end
+
   desc "Generate a plot showing correlation between GI and MINK"
   task :correlation_mink_gi_csv => [:environment] do
 

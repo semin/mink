@@ -647,4 +647,365 @@ namespace :import do
     sh cmd
   end
 
+
+  desc "Import GIT vectors"
+  task :git_vectors => [:environment] do
+
+    vec_file = configatron.mink_scop_git_dir.join("GIT.stdout")
+
+    unless File.exists? vec_file
+      $logger.error "#{vec_file} does not exist"
+      exit 1
+    end
+
+    IO.foreach(vec_file) do |line|
+      columns = line.chomp.split(/\s+/)
+
+      unless columns.size == 35
+        $logger.warn "Cannot recognize this line: #{line.chomp}"
+        next
+      end
+
+      sid = columns[0].gsub(/^g/, 'd').gsub(/\.(pdb|ent)/, '')
+      cc  = columns[1]
+      dom = Scop.find_by_sid(sid)
+
+      if dom.nil?
+        $logger.error "Cannot find SCOP domain, #{sid}"
+        exit 1
+      end
+
+      gv = dom.git_vectors.find_by_sid_and_chain_code(sid, cc)
+
+      unless gv.nil?
+        $logger.warn "#{sid}-#{cc} already imported, maybe NMR structure?"
+        next
+      end
+
+      dom.git_vectors.create!(:sid                          => sid,
+                             :sunid                         => dom.sunid,
+                             :sccs                          => dom.sccs,
+                             :chain_code                    => cc,
+                             :cas_missing                   => columns[2],
+                             :cas                           => columns[3],
+                             :cube_root_cas_19_11           => columns[4],
+                             :measure1                      => columns[5],
+                             :measure2                      => columns[6],
+                             :measure3                      => columns[7],
+                             :measure4                      => columns[8],
+                             :measure5                      => columns[9],
+                             :measure6                      => columns[10],
+                             :measure7                      => columns[11],
+                             :measure8                      => columns[12],
+                             :measure9                      => columns[13],
+                             :measure10                     => columns[14],
+                             :measure11                     => columns[15],
+                             :measure12                     => columns[16],
+                             :measure13                     => columns[17],
+                             :measure14                     => columns[18],
+                             :measure15                     => columns[19],
+                             :measure16                     => columns[20],
+                             :measure17                     => columns[21],
+                             :measure18                     => columns[22],
+                             :measure19                     => columns[23],
+                             :measure20                     => columns[24],
+                             :measure21                     => columns[25],
+                             :measure22                     => columns[26],
+                             :measure23                     => columns[27],
+                             :measure24                     => columns[28],
+                             :measure25                     => columns[29],
+                             :measure26                     => columns[30],
+                             :measure27                     => columns[31],
+                             :measure28                     => columns[32],
+                             :measure29                     => columns[33],
+                             :measure30                     => columns[34],
+                             :scop_class_description        => dom.scop_class.description,
+                             :scop_fold_description         => dom.scop_fold.description,
+                             :scop_superfamily_description  => dom.scop_superfamily.description,
+                             :scop_family_description       => dom.scop_family.description,
+                             :scop_protein_description      => dom.scop_protein.description,
+                             :scop_species_description      => dom.scop_species.description,
+                             :scop_domain_description       => dom.description)
+    end
+    $logger.info "Importing GIT vectors: done"
+  end
+
+
+  desc "Import Normalized GIT vectors"
+  task :norm_git_vectors => [:environment] do
+
+    min_measure1 , max_measure1  = GitVector.minimum(:measure1 ), GitVector.maximum(:measure1 )
+    min_measure2 , max_measure2  = GitVector.minimum(:measure2 ), GitVector.maximum(:measure2 )
+    min_measure3 , max_measure3  = GitVector.minimum(:measure3 ), GitVector.maximum(:measure3 )
+    min_measure4 , max_measure4  = GitVector.minimum(:measure4 ), GitVector.maximum(:measure4 )
+    min_measure5 , max_measure5  = GitVector.minimum(:measure5 ), GitVector.maximum(:measure5 )
+    min_measure6 , max_measure6  = GitVector.minimum(:measure6 ), GitVector.maximum(:measure6 )
+    min_measure7 , max_measure7  = GitVector.minimum(:measure7 ), GitVector.maximum(:measure7 )
+    min_measure8 , max_measure8  = GitVector.minimum(:measure8 ), GitVector.maximum(:measure8 )
+    min_measure9 , max_measure9  = GitVector.minimum(:measure9 ), GitVector.maximum(:measure9 )
+    min_measure10, max_measure10 = GitVector.minimum(:measure10), GitVector.maximum(:measure10)
+    min_measure11, max_measure11 = GitVector.minimum(:measure11), GitVector.maximum(:measure11)
+    min_measure12, max_measure12 = GitVector.minimum(:measure12), GitVector.maximum(:measure12)
+    min_measure13, max_measure13 = GitVector.minimum(:measure13), GitVector.maximum(:measure13)
+    min_measure14, max_measure14 = GitVector.minimum(:measure14), GitVector.maximum(:measure14)
+    min_measure15, max_measure15 = GitVector.minimum(:measure15), GitVector.maximum(:measure15)
+    min_measure16, max_measure16 = GitVector.minimum(:measure16), GitVector.maximum(:measure16)
+    min_measure17, max_measure17 = GitVector.minimum(:measure17), GitVector.maximum(:measure17)
+    min_measure18, max_measure18 = GitVector.minimum(:measure18), GitVector.maximum(:measure18)
+    min_measure19, max_measure19 = GitVector.minimum(:measure19), GitVector.maximum(:measure19)
+    min_measure20, max_measure20 = GitVector.minimum(:measure20), GitVector.maximum(:measure20)
+    min_measure21, max_measure21 = GitVector.minimum(:measure21), GitVector.maximum(:measure21)
+    min_measure22, max_measure22 = GitVector.minimum(:measure22), GitVector.maximum(:measure22)
+    min_measure23, max_measure23 = GitVector.minimum(:measure23), GitVector.maximum(:measure23)
+    min_measure24, max_measure24 = GitVector.minimum(:measure24), GitVector.maximum(:measure24)
+    min_measure25, max_measure25 = GitVector.minimum(:measure25), GitVector.maximum(:measure25)
+    min_measure26, max_measure26 = GitVector.minimum(:measure26), GitVector.maximum(:measure26)
+    min_measure27, max_measure27 = GitVector.minimum(:measure27), GitVector.maximum(:measure27)
+    min_measure28, max_measure28 = GitVector.minimum(:measure28), GitVector.maximum(:measure28)
+    min_measure29, max_measure29 = GitVector.minimum(:measure29), GitVector.maximum(:measure29)
+    min_measure30, max_measure30 = GitVector.minimum(:measure30), GitVector.maximum(:measure30)
+
+    submax_measure1  = max_measure1  - min_measure1
+    submax_measure2  = max_measure2  - min_measure2
+    submax_measure3  = max_measure3  - min_measure3
+    submax_measure4  = max_measure4  - min_measure4
+    submax_measure5  = max_measure5  - min_measure5
+    submax_measure6  = max_measure6  - min_measure6
+    submax_measure7  = max_measure7  - min_measure7
+    submax_measure8  = max_measure8  - min_measure8
+    submax_measure9  = max_measure9  - min_measure9
+    submax_measure10 = max_measure10 - min_measure10
+    submax_measure11 = max_measure11 - min_measure11
+    submax_measure12 = max_measure12 - min_measure12
+    submax_measure13 = max_measure13 - min_measure13
+    submax_measure14 = max_measure14 - min_measure14
+    submax_measure15 = max_measure15 - min_measure15
+    submax_measure16 = max_measure16 - min_measure16
+    submax_measure17 = max_measure17 - min_measure17
+    submax_measure18 = max_measure18 - min_measure18
+    submax_measure19 = max_measure19 - min_measure19
+    submax_measure20 = max_measure20 - min_measure20
+    submax_measure21 = max_measure21 - min_measure21
+    submax_measure22 = max_measure22 - min_measure22
+    submax_measure23 = max_measure23 - min_measure23
+    submax_measure24 = max_measure24 - min_measure24
+    submax_measure25 = max_measure25 - min_measure25
+    submax_measure26 = max_measure26 - min_measure26
+    submax_measure27 = max_measure27 - min_measure27
+    submax_measure28 = max_measure28 - min_measure28
+    submax_measure29 = max_measure29 - min_measure29
+    submax_measure30 = max_measure30 - min_measure30
+
+    GitVector.find_each do |git_vector|
+      NormGitVector.create!(
+        :git_vector_id => git_vector.id,
+        :scop_id      => git_vector.scop_id,
+        :sid          => git_vector.sid,
+        :sunid        => git_vector.sunid,
+        :sccs         => git_vector.sccs,
+        :chain_code   => git_vector.chain_code,
+        :cas_missing  => git_vector.cas_missing,
+        :cas          => git_vector.cas,
+        :cube_root_cas_19_11 => git_vector.cube_root_cas_19_11,
+        :measure1     => (git_vector.measure1  - min_measure1 ) / submax_measure1 ,
+        :measure2     => (git_vector.measure2  - min_measure2 ) / submax_measure2 ,
+        :measure3     => (git_vector.measure3  - min_measure3 ) / submax_measure3 ,
+        :measure4     => (git_vector.measure4  - min_measure4 ) / submax_measure4 ,
+        :measure5     => (git_vector.measure5  - min_measure5 ) / submax_measure5 ,
+        :measure6     => (git_vector.measure6  - min_measure6 ) / submax_measure6 ,
+        :measure7     => (git_vector.measure7  - min_measure7 ) / submax_measure7 ,
+        :measure8     => (git_vector.measure8  - min_measure8 ) / submax_measure8 ,
+        :measure9     => (git_vector.measure9  - min_measure9 ) / submax_measure9 ,
+        :measure10    => (git_vector.measure10 - min_measure10) / submax_measure10,
+        :measure11    => (git_vector.measure11 - min_measure11) / submax_measure11,
+        :measure12    => (git_vector.measure12 - min_measure12) / submax_measure12,
+        :measure13    => (git_vector.measure13 - min_measure13) / submax_measure13,
+        :measure14    => (git_vector.measure14 - min_measure14) / submax_measure14,
+        :measure15    => (git_vector.measure15 - min_measure15) / submax_measure15,
+        :measure16    => (git_vector.measure16 - min_measure16) / submax_measure16,
+        :measure17    => (git_vector.measure17 - min_measure17) / submax_measure17,
+        :measure18    => (git_vector.measure18 - min_measure18) / submax_measure18,
+        :measure19    => (git_vector.measure19 - min_measure19) / submax_measure19,
+        :measure20    => (git_vector.measure20 - min_measure20) / submax_measure20,
+        :measure21    => (git_vector.measure21 - min_measure21) / submax_measure21,
+        :measure22    => (git_vector.measure22 - min_measure22) / submax_measure22,
+        :measure23    => (git_vector.measure23 - min_measure23) / submax_measure23,
+        :measure24    => (git_vector.measure24 - min_measure24) / submax_measure24,
+        :measure25    => (git_vector.measure25 - min_measure25) / submax_measure25,
+        :measure26    => (git_vector.measure26 - min_measure26) / submax_measure26,
+        :measure27    => (git_vector.measure27 - min_measure27) / submax_measure27,
+        :measure28    => (git_vector.measure28 - min_measure28) / submax_measure28,
+        :measure29    => (git_vector.measure29 - min_measure29) / submax_measure29,
+        :measure30    => (git_vector.measure30 - min_measure30) / submax_measure30,
+        :scop_class_description       => git_vector.scop_class_description,
+        :scop_fold_description        => git_vector.scop_fold_description,
+        :scop_superfamily_description => git_vector.scop_superfamily_description,
+        :scop_family_description      => git_vector.scop_family_description,
+        :scop_protein_description     => git_vector.scop_protein_description,
+        :scop_species_description     => git_vector.scop_species_description,
+        :scop_domain_description      => git_vector.scop_domain_description
+      )
+    end
+
+    GitValue.create!(
+      :min_measure1     => min_measure1 ,
+      :min_measure2     => min_measure2 ,
+      :min_measure3     => min_measure3 ,
+      :min_measure4     => min_measure4 ,
+      :min_measure5     => min_measure5 ,
+      :min_measure6     => min_measure6 ,
+      :min_measure7     => min_measure7 ,
+      :min_measure8     => min_measure8 ,
+      :min_measure9     => min_measure9 ,
+      :min_measure10    => min_measure10,
+      :min_measure11    => min_measure11,
+      :min_measure12    => min_measure12,
+      :min_measure13    => min_measure13,
+      :min_measure14    => min_measure14,
+      :min_measure15    => min_measure15,
+      :min_measure16    => min_measure16,
+      :min_measure17    => min_measure17,
+      :min_measure18    => min_measure18,
+      :min_measure19    => min_measure19,
+      :min_measure20    => min_measure20,
+      :min_measure21    => min_measure21,
+      :min_measure22    => min_measure22,
+      :min_measure23    => min_measure23,
+      :min_measure24    => min_measure24,
+      :min_measure25    => min_measure25,
+      :min_measure26    => min_measure26,
+      :min_measure27    => min_measure27,
+      :min_measure28    => min_measure28,
+      :min_measure29    => min_measure29,
+      :min_measure30    => min_measure30,
+      :max_measure1     => max_measure1 ,
+      :max_measure2     => max_measure2 ,
+      :max_measure3     => max_measure3 ,
+      :max_measure4     => max_measure4 ,
+      :max_measure5     => max_measure5 ,
+      :max_measure6     => max_measure6 ,
+      :max_measure7     => max_measure7 ,
+      :max_measure8     => max_measure8 ,
+      :max_measure9     => max_measure9 ,
+      :max_measure10    => max_measure10,
+      :max_measure11    => max_measure11,
+      :max_measure12    => max_measure12,
+      :max_measure13    => max_measure13,
+      :max_measure14    => max_measure14,
+      :max_measure15    => max_measure15,
+      :max_measure16    => max_measure16,
+      :max_measure17    => max_measure17,
+      :max_measure18    => max_measure18,
+      :max_measure19    => max_measure19,
+      :max_measure20    => max_measure20,
+      :max_measure21    => max_measure21,
+      :max_measure22    => max_measure22,
+      :max_measure23    => max_measure23,
+      :max_measure24    => max_measure24,
+      :max_measure25    => max_measure25,
+      :max_measure26    => max_measure26,
+      :max_measure27    => max_measure27,
+      :max_measure28    => max_measure28,
+      :max_measure29    => max_measure29,
+      :max_measure30    => max_measure30,
+      :submax_measure1  => submax_measure1 ,
+      :submax_measure2  => submax_measure2 ,
+      :submax_measure3  => submax_measure3 ,
+      :submax_measure4  => submax_measure4 ,
+      :submax_measure5  => submax_measure5 ,
+      :submax_measure6  => submax_measure6 ,
+      :submax_measure7  => submax_measure7 ,
+      :submax_measure8  => submax_measure8 ,
+      :submax_measure9  => submax_measure9 ,
+      :submax_measure10 => submax_measure10,
+      :submax_measure11 => submax_measure11,
+      :submax_measure12 => submax_measure12,
+      :submax_measure13 => submax_measure13,
+      :submax_measure14 => submax_measure14,
+      :submax_measure15 => submax_measure15,
+      :submax_measure16 => submax_measure16,
+      :submax_measure17 => submax_measure17,
+      :submax_measure18 => submax_measure18,
+      :submax_measure19 => submax_measure19,
+      :submax_measure20 => submax_measure20,
+      :submax_measure21 => submax_measure21,
+      :submax_measure22 => submax_measure22,
+      :submax_measure23 => submax_measure23,
+      :submax_measure24 => submax_measure24,
+      :submax_measure25 => submax_measure25,
+      :submax_measure26 => submax_measure26,
+      :submax_measure27 => submax_measure27,
+      :submax_measure28 => submax_measure28,
+      :submax_measure29 => submax_measure29,
+      :submax_measure30 => submax_measure30
+    )
+  end
+
+
+  desc "Import git_vector_similarities"
+  task :git_vector_similarities => [:environment] do
+
+    git_vectors = GitVector.all
+    git_vectors.combination(2).each do |git_vector1, git_vector2|
+      dist = git_vector1.euclidean_distance_to git_vector2
+      GitVectorSimilarity.create!(:git_vector_id          => git_vector1,
+                                  :similar_git_vector_id  => git_vector2,
+                                  :distance               => dist)
+    end
+  end
+
+
+  desc "Import git_vector_similarities.csv"
+  task :git_vector_similarities_csv => [:environment] do
+
+    csv = configatron.git_vector_similarities_csv
+    cmd = [
+      "mysqlimport",
+      "--host=#{Rails.configuration.database_configuration[Rails.env]['host']}",
+      "--local",
+      '--fields-optionally-enclosed-by=\'"\'',
+      '--fields-terminated-by=,',
+      '--lines-terminated-by="\n"',
+      "--user=semin",
+      "--password",
+      Rails.configuration.database_configuration[Rails.env]["database"],
+      csv
+    ].join(" ")
+
+    sh cmd
+  end
+
+
+  desc "Import norm_git_vector_similarities"
+  task :norm_git_vector_similarities => [:environment] do
+
+    norm_git_vectors = NormGitVector.all
+    norm_git_vectors.combination(2).each do |norm_git_vector1, norm_git_vector2|
+      dist = norm_git_vector1.euclidean_distance_to norm_git_vector2
+      NormGitVectorSimilarity.create!(:norm_git_vector_id         => norm_git_vector1,
+                                      :similar_norm_git_vector_id => norm_git_vector2,
+                                      :distance                   => dist)
+    end
+  end
+
+
+  desc "Import norm_git_vector_similarities.csv"
+  task :norm_git_vector_similarities_csv => [:environment] do
+
+    csv = configatron.norm_git_vector_similarities_csv
+    cmd = [
+      "mysqlimport",
+      "--host=#{Rails.configuration.database_configuration[Rails.env]['host']}",
+      "--local",
+      '--fields-optionally-enclosed-by=\'"\'',
+      '--fields-terminated-by=,',
+      '--lines-terminated-by="\n"',
+      "--user=semin",
+      "--password",
+      Rails.configuration.database_configuration[Rails.env]["database"],
+      csv
+    ].join(" ")
+
+    sh cmd
+  end
 end

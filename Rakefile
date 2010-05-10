@@ -12,12 +12,12 @@ require 'thinking_sphinx/tasks'
 
 include FileUtils
 
-RakeFileUtils.verbose(false)
+#RakeFileUtils.verbose(false)
 
 Rake.application.options.trace = true
 
-Rake.application.instance_variable_get(:@tasks).delete("db:schema:dump")
-namespace(:db) { namespace(:schema) { task(:dump) { puts "Schema dump disabled" } } }
+#Rake.application.instance_variable_get(:@tasks).delete("db:schema:dump")
+#namespace(:db) { namespace(:schema) { task(:dump) { puts "Schema dump disabled" } } }
 
 class RakeLogger < Logger
   def format_message(severity, timestamp, progname, msg)
