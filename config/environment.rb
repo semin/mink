@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'narray'
   config.gem 'paperclip'
   config.gem 'configatron'
-  config.gem 'daemon-spawn', :lib => 'daemon_spwan'
+  config.gem 'daemon-spawn', :lib => 'daemon_spawn'
   config.gem 'ar-extensions'
   config.gem 'parallel-forkmanager', :lib => 'forkmanager'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.16'
